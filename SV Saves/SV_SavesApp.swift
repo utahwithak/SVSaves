@@ -9,9 +9,7 @@ import SwiftUI
 
 @main
 struct SV_SavesApp: App {
-    var body: some Scene {
-        DocumentGroup(newDocument: SV_SavesDocument()) { file in
-            ContentView(document: file.$document)
-        }
-    }
+    
+
+    var body: some Scene { RootScene() }
 }

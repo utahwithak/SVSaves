@@ -23,6 +23,23 @@ class SV_SavesTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
+    func testParsing() throws {
+    
+        let bundle = Bundle(for: self.classForCoder)
+        let savesFolder = bundle.bundleURL.appendingPathComponent("Saves")
+        guard let folderEnumerator = FileManager.default.enumerator(at: savesFolder, includingPropertiesForKeys: nil, options: [.skipsSubdirectoryDescendants]) else {
+            XCTFail("Unable to get save folder enumerator")
+            return
+        }
+        for file in folderEnumerator {
+            
+        }
+        
+        XCTAssert(bundle.bundlePath != "")
+        
+        
+    }
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {
