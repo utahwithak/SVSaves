@@ -10,31 +10,54 @@ import SwiftUI
 
 struct DirectoryView: View {
     
-    @ObservedObject var manager: GameManager    
+    @ObservedObject var manager: GameManager
     
     @ObservedObject var settings: Settings
-
+    
     @State private var showDocumentPicker = false
     
     var body: some View {
-        VStack {
-            
-            if manager.canAccessUrl {
+        
+        NavigationView {
+            VStack {
+                if manager.canAccessUrl {
+                    
+                    List {
+                        ForEach(manager.games) { game in
+                            NavigationLink(destination: GameView(game: game)) {
+                                GameRowView(game: game)
+                            }
+                        }
+                    }
+                    
+                }
                 
-                ForEach(manager.games) { result in
-                    Text("Result: \(result.name)")
+                else {
+                    Button("Choose Stardew Valley Folder") {
+                        showDocumentPicker = true
+                    }
                 }
-            } else {
-                Button("Choose Stardew Valley Folder") {
-                    showDocumentPicker = true
+            } .navigationBarTitle(Text("Games"))
+                .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            showDocumentPicker = true
+                        }) {
+                            Image(systemName: "folder.badge.plus")
+                        }
+                        
+                        
+                    }
                 }
-            }
             
-        }.sheet(isPresented: $showDocumentPicker) {
+        }
+        
+        .sheet(isPresented: $showDocumentPicker) {
             print("Dismissed")
         } content: {
             DocumentPicker(pickedPath: $settings.stardewValleyFolderLocation)
         }
+        
         
     }
 }

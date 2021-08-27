@@ -25,7 +25,6 @@ class GameManager : ObservableObject {
         subscription = self.rootURL.projectedValue.sink { url in
             self.refresh(with: url)
         }
-        
     }
     
     deinit {
