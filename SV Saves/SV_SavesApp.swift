@@ -11,5 +11,8 @@ import SwiftUI
 struct SV_SavesApp: App {
     
 
-    var body: some Scene { RootScene() }
+    var body: some Scene {
+        RootScene()
+    
+    }
 }

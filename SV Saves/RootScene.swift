@@ -14,10 +14,9 @@ struct RootScene: Scene {
     var hasShownIntro = false
     
     var body: some Scene {
-        DocumentGroup(newDocument: SaveGameDocument()) { file in
-            ContentView(document: file.$document)
+        WindowGroup {
+            RootView()
         }
-        
     }
     
 }

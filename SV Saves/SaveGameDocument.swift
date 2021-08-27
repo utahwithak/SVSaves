@@ -12,6 +12,9 @@ extension UTType {
     static var exampleText: UTType {
         UTType(importedAs: "com.example.plain-text")
     }
+    static var everything: UTType {
+        UTType(importedAs: "public.data")
+    }
 }
 
 struct SaveGameDocument: FileDocument {
@@ -21,7 +24,7 @@ struct SaveGameDocument: FileDocument {
         self.text = text
     }
 
-    static var readableContentTypes: [UTType] { [.exampleText] }
+    static var readableContentTypes: [UTType] { [.exampleText, .everything] }
 
     init(configuration: ReadConfiguration) throws {
         guard let data = configuration.file.regularFileContents,

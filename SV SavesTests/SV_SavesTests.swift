@@ -31,9 +31,6 @@ class SV_SavesTests: XCTestCase {
             XCTFail("Unable to get save folder enumerator")
             return
         }
-        for file in folderEnumerator {
-            
-        }
         
         XCTAssert(bundle.bundlePath != "")
         
