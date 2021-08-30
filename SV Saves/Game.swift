@@ -6,12 +6,19 @@
 //
 
 import Foundation
+import SDGParser
+
 
 class Game : ObservableObject, Identifiable {
     
-    @Published var name: String = "Loading"
+    @Published var farmName: String = ""
+    
+    @Published
+    var isLoading = true
     
     private let path: URL
+    
+    private var game: Game?
     
     private var gamePath: URL {
         let name = path.lastPathComponent
@@ -20,19 +27,29 @@ class Game : ObservableObject, Identifiable {
     
     init(path: URL ) {
         self.path = path
+        
     }
     
     func loadName() async {
         isLoading = true
-        defer {
-            isLoading = false
+
+        
+        do {
+            let loadedGame = try await Parser.parse(game: gamePath)
+            DispatchQueue.main.async {
+                self.farmName = loadedGame.player.farmName
+                
+                self.isLoading = false
+                
+            }
+            
+        } catch {
+            print("Failed:\(error)")
         }
-        print("Load Name")
-    
+        
     }
     
-    @Published
-    var isLoading = false
+    
     
     var id: String {
         return path.path

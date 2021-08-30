@@ -6,7 +6,6 @@
 //
 
 import XCTest
-@testable import SV_Saves
 
 class SV_SavesTests: XCTestCase {
 
@@ -25,16 +24,7 @@ class SV_SavesTests: XCTestCase {
 
     func testParsing() throws {
     
-        let bundle = Bundle(for: self.classForCoder)
-        let savesFolder = bundle.bundleURL.appendingPathComponent("Saves")
-        guard let folderEnumerator = FileManager.default.enumerator(at: savesFolder, includingPropertiesForKeys: nil, options: [.skipsSubdirectoryDescendants]) else {
-            XCTFail("Unable to get save folder enumerator")
-            return
-        }
-        
-        XCTAssert(bundle.bundlePath != "")
-        
-        
+
     }
     
     func testPerformanceExample() throws {

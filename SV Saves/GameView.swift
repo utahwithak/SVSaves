@@ -14,7 +14,7 @@ struct GameView: View {
     
     var body: some View {
         VStack {
-            Text(game.name)
+            Text(game.farmName)
         }
     }
 }
