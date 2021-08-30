@@ -10,7 +10,9 @@ import SwiftUI
 
 
 struct GameView: View {
-    let game: Game
+    @ObservedObject var game: Game
+    
+    
     
     var body: some View {
         VStack {
