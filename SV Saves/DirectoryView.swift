@@ -21,7 +21,6 @@ struct DirectoryView: View {
         NavigationView {
             VStack {
                 if manager.canAccessUrl {
-                    
                     List {
                         ForEach(manager.games) { game in
                             NavigationLink(destination: GameView(game: game)) {

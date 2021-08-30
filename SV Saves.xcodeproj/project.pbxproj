@@ -20,7 +20,6 @@
 		8F5B772A26D933D000B2AA7E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B772926D933D000B2AA7E /* GameView.swift */; };
 		8F5D8FE726D7E2A300E0FA08 /* RootScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5D8FE626D7E2A300E0FA08 /* RootScene.swift */; };
 		8F5D8FE926D7E38000E0FA08 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5D8FE826D7E38000E0FA08 /* IntroView.swift */; };
-		8F5D8FEB26D8030B00E0FA08 /* Saves in Resources */ = {isa = PBXBuildFile; fileRef = 8F5D8FEA26D8030A00E0FA08 /* Saves */; };
 		8F7326192694B9F9002DCDA7 /* SV_SavesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7326182694B9F9002DCDA7 /* SV_SavesApp.swift */; };
 		8F73261B2694B9F9002DCDA7 /* SaveGameDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F73261A2694B9F9002DCDA7 /* SaveGameDocument.swift */; };
 		8F73261D2694B9F9002DCDA7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F73261C2694B9F9002DCDA7 /* ContentView.swift */; };
@@ -28,6 +27,7 @@
 		8F7326222694B9FC002DCDA7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F7326212694B9FC002DCDA7 /* Preview Assets.xcassets */; };
 		8F73262D2694B9FC002DCDA7 /* SV_SavesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F73262C2694B9FC002DCDA7 /* SV_SavesTests.swift */; };
 		8F7326372694B9FC002DCDA7 /* SV_SavesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7326362694B9FC002DCDA7 /* SV_SavesUITests.swift */; };
+		8F957E3F26DD442F00ACA52F /* SDGParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8F957E3E26DD442F00ACA52F /* SDGParser */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +61,6 @@
 		8F5B772926D933D000B2AA7E /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		8F5D8FE626D7E2A300E0FA08 /* RootScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootScene.swift; sourceTree = "<group>"; };
 		8F5D8FE826D7E38000E0FA08 /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
-		8F5D8FEA26D8030A00E0FA08 /* Saves */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Saves; sourceTree = "<group>"; };
 		8F7326152694B9F9002DCDA7 /* SV Saves.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SV Saves.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F7326182694B9F9002DCDA7 /* SV_SavesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SV_SavesApp.swift; sourceTree = "<group>"; };
 		8F73261A2694B9F9002DCDA7 /* SaveGameDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveGameDocument.swift; sourceTree = "<group>"; };
@@ -80,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F957E3F26DD442F00ACA52F /* SDGParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,7 +173,6 @@
 		8F73262B2694B9FC002DCDA7 /* SV SavesTests */ = {
 			isa = PBXGroup;
 			children = (
-				8F5D8FEA26D8030A00E0FA08 /* Saves */,
 				8F73262C2694B9FC002DCDA7 /* SV_SavesTests.swift */,
 			);
 			path = "SV SavesTests";
@@ -203,6 +202,9 @@
 			dependencies = (
 			);
 			name = "SV Saves";
+			packageProductDependencies = (
+				8F957E3E26DD442F00ACA52F /* SDGParser */,
+			);
 			productName = "SV Saves";
 			productReference = 8F7326152694B9F9002DCDA7 /* SV Saves.app */;
 			productType = "com.apple.product-type.application";
@@ -275,6 +277,9 @@
 				Base,
 			);
 			mainGroup = 8F73260C2694B9F9002DCDA7;
+			packageReferences = (
+				8F957E3D26DD442F00ACA52F /* XCRemoteSwiftPackageReference "SDGParser" */,
+			);
 			productRefGroup = 8F7326162694B9F9002DCDA7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -300,7 +305,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F5D8FEB26D8030B00E0FA08 /* Saves in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,7 +507,6 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -535,7 +538,6 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -685,6 +687,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8F957E3D26DD442F00ACA52F /* XCRemoteSwiftPackageReference "SDGParser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/utahwithak/SDGParser";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8F957E3E26DD442F00ACA52F /* SDGParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F957E3D26DD442F00ACA52F /* XCRemoteSwiftPackageReference "SDGParser" */;
+			productName = SDGParser;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8F73260D2694B9F9002DCDA7 /* Project object */;
 }

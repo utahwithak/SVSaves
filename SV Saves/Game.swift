@@ -7,12 +7,39 @@
 
 import Foundation
 
-struct Game : Identifiable {
+class Game : ObservableObject, Identifiable {
     
-    let name: String
-    let url: URL
-
+    @Published var name: String = "Loading"
+    
+    private let path: URL
+    
+    private var gamePath: URL {
+        let name = path.lastPathComponent
+        return path.appendingPathComponent(name)
+    }
+    
+    init(path: URL ) {
+        self.path = path
+    }
+    
+    func loadName() async {
+        isLoading = true
+        defer {
+            isLoading = false
+        }
+        print("Load Name")
+    
+    }
+    
+    @Published
+    var isLoading = false
+    
     var id: String {
-        return url.path
+        return path.path
+    }
+    
+    func load() async {
+        isLoading = true
+        
     }
 }

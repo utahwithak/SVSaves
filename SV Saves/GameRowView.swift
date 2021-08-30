@@ -15,6 +15,11 @@ struct GameRowView: View {
     
     var body: some View {
         Text(game.name)
+            .onAppear {
+                Task {
+                    await game.loadName()
+                }
+        }
     }
     
 }
