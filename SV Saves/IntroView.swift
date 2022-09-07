@@ -16,20 +16,21 @@ struct IntroView: View {
     
     var body: some View {
         VStack {
-            if settings.stardewValleyFolderLocation != nil {
-                DirectoryView(manager: GameManager(rootURL: settings.locationBinding), settings: settings)
+            if let location = settings.stardewValleyFolderLocation {
+                DirectoryView(manager: GameManager(url: location, publisher: settings.$stardewValleyFolderLocation.eraseToAnyPublisher()), settings: settings)
             } else {
                 Button("Choose Stardew Valley Folder") {
                     showDocumentPicker = true
                 }
             }
-        }.sheet(isPresented: $showDocumentPicker) {
-            print("Dismissed")
-        } content: {
-            DocumentPicker(pickedPath: $settings.stardewValleyFolderLocation)
         }
-        
-        
-        
+        .fileImporter(isPresented: $showDocumentPicker, allowedContentTypes: [.folder], onCompletion: { result in
+            switch result {
+            case .success(let url):
+                settings.stardewValleyFolderLocation = url
+            case .failure(let error):
+                print("Failed to choose folder: \(error)")
+            }
+        })
     }
 }

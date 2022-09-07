@@ -10,9 +10,7 @@ import SwiftUI
 @main
 struct SV_SavesApp: App {
     
-
     var body: some Scene {
         RootScene()
-    
     }
 }

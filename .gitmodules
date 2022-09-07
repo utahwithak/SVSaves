@@ -1,0 +1,3 @@
+[submodule "SDGParser"]
+	path = SDGParser
+	url = git@github.com:utahwithak/SDGParser.git

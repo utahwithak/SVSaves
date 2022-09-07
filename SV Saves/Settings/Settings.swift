@@ -11,11 +11,7 @@ import SwiftUI
 
 class Settings: ObservableObject {
     
-    
     @Published(wrappedValue: nil, key: .stardewValleyFolderLocation)
     public var stardewValleyFolderLocation: URL?
-    
-    public var locationBinding: Published<URL?> {
-        return _stardewValleyFolderLocation
-    }
+
 }

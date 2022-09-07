@@ -18,7 +18,7 @@ struct DirectoryView: View {
     
     var body: some View {
         
-        NavigationView {
+        NavigationStack {
             VStack {
                 if manager.canAccessUrl {
                     List {
@@ -27,10 +27,10 @@ struct DirectoryView: View {
                                 GameRowView(game: game)
                             }
                         }
+                    }.refreshable {
+                        manager.refresh()
                     }
-                    
                 }
-                
                 else {
                     Button("Choose Stardew Valley Folder") {
                         showDocumentPicker = true
@@ -50,13 +50,15 @@ struct DirectoryView: View {
                 }
             
         }
-        
-        .sheet(isPresented: $showDocumentPicker) {
-            print("Dismissed")
-        } content: {
-            DocumentPicker(pickedPath: $settings.stardewValleyFolderLocation)
-        }
-        
+        .fileImporter(isPresented: $showDocumentPicker, allowedContentTypes: [.folder], onCompletion: { result in
+
+        })
+//        .sheet(isPresented: $showDocumentPicker) {
+//            print("Dismissed")
+//        } content: {
+//            DocumentPicker(pickedPath: $settings.stardewValleyFolderLocation)
+//        }
+//        
         
     }
 }

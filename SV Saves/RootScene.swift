@@ -10,12 +10,9 @@ import SwiftUI
 
 struct RootScene: Scene {
     
-    @State
-    var hasShownIntro = false
-    
     var body: some Scene {
         WindowGroup {
-            RootView()
+            IntroView(settings: Settings())
         }
     }
     

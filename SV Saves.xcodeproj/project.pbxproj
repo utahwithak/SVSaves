@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F2F5E2D28C8FE6700C7D749 /* SDGParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8F2F5E2C28C8FE6700C7D749 /* SDGParser */; };
+		8F2F5E3028C9072500C7D749 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2F5E2F28C9072500C7D749 /* Player.swift */; };
 		8F5B771426D8124100B2AA7E /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B771326D8124100B2AA7E /* Settings.swift */; };
 		8F5B771726D812BC00B2AA7E /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B771626D812BC00B2AA7E /* Setting.swift */; };
 		8F5B771926D814B300B2AA7E /* SettingsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B771826D814B300B2AA7E /* SettingsKey.swift */; };
-		8F5B771B26D8157700B2AA7E /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B771A26D8157700B2AA7E /* RootView.swift */; };
-		8F5B771D26D8185900B2AA7E /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B771C26D8185900B2AA7E /* DocumentPicker.swift */; };
-		8F5B772026D8194900B2AA7E /* DocumentPickerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B771F26D8194900B2AA7E /* DocumentPickerCoordinator.swift */; };
 		8F5B772226D90B4100B2AA7E /* DirectoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B772126D90B4100B2AA7E /* DirectoryView.swift */; };
 		8F5B772426D90BBD00B2AA7E /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B772326D90BBD00B2AA7E /* GameManager.swift */; };
 		8F5B772626D90CA600B2AA7E /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B772526D90CA600B2AA7E /* Game.swift */; };
@@ -27,7 +26,6 @@
 		8F7326222694B9FC002DCDA7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F7326212694B9FC002DCDA7 /* Preview Assets.xcassets */; };
 		8F73262D2694B9FC002DCDA7 /* SV_SavesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F73262C2694B9FC002DCDA7 /* SV_SavesTests.swift */; };
 		8F7326372694B9FC002DCDA7 /* SV_SavesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7326362694B9FC002DCDA7 /* SV_SavesUITests.swift */; };
-		8F957E3F26DD442F00ACA52F /* SDGParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8F957E3E26DD442F00ACA52F /* SDGParser */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,12 +46,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8F2F5E2A28C8FE5D00C7D749 /* SDGParser */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SDGParser; sourceTree = "<group>"; };
+		8F2F5E2F28C9072500C7D749 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		8F5B771326D8124100B2AA7E /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		8F5B771626D812BC00B2AA7E /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		8F5B771826D814B300B2AA7E /* SettingsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsKey.swift; sourceTree = "<group>"; };
-		8F5B771A26D8157700B2AA7E /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
-		8F5B771C26D8185900B2AA7E /* DocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPicker.swift; sourceTree = "<group>"; };
-		8F5B771F26D8194900B2AA7E /* DocumentPickerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerCoordinator.swift; sourceTree = "<group>"; };
 		8F5B772126D90B4100B2AA7E /* DirectoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryView.swift; sourceTree = "<group>"; };
 		8F5B772326D90BBD00B2AA7E /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		8F5B772526D90CA600B2AA7E /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
@@ -79,7 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F957E3F26DD442F00ACA52F /* SDGParser in Frameworks */,
+				8F2F5E2D28C8FE6700C7D749 /* SDGParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +97,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F2F5E2B28C8FE6700C7D749 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8F2F5E2E28C9061F00C7D749 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				8F5B772526D90CA600B2AA7E /* Game.swift */,
+				8F2F5E2F28C9072500C7D749 /* Player.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		8F5B771526D8129B00B2AA7E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,22 +123,15 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		8F5B771E26D8187D00B2AA7E /* Document Picker */ = {
-			isa = PBXGroup;
-			children = (
-				8F5B771C26D8185900B2AA7E /* DocumentPicker.swift */,
-				8F5B771F26D8194900B2AA7E /* DocumentPickerCoordinator.swift */,
-			);
-			path = "Document Picker";
-			sourceTree = "<group>";
-		};
 		8F73260C2694B9F9002DCDA7 = {
 			isa = PBXGroup;
 			children = (
+				8F2F5E2A28C8FE5D00C7D749 /* SDGParser */,
 				8F7326172694B9F9002DCDA7 /* SV Saves */,
 				8F73262B2694B9FC002DCDA7 /* SV SavesTests */,
 				8F7326352694B9FC002DCDA7 /* SV SavesUITests */,
 				8F7326162694B9F9002DCDA7 /* Products */,
+				8F2F5E2B28C8FE6700C7D749 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -144,16 +150,14 @@
 			children = (
 				8F7326182694B9F9002DCDA7 /* SV_SavesApp.swift */,
 				8F5D8FE626D7E2A300E0FA08 /* RootScene.swift */,
-				8F5B771A26D8157700B2AA7E /* RootView.swift */,
 				8F5D8FE826D7E38000E0FA08 /* IntroView.swift */,
 				8F73261C2694B9F9002DCDA7 /* ContentView.swift */,
 				8F5B772126D90B4100B2AA7E /* DirectoryView.swift */,
 				8F5B772726D9333400B2AA7E /* GameRowView.swift */,
 				8F5B772926D933D000B2AA7E /* GameView.swift */,
 				8F5B772326D90BBD00B2AA7E /* GameManager.swift */,
-				8F5B772526D90CA600B2AA7E /* Game.swift */,
+				8F2F5E2E28C9061F00C7D749 /* Data */,
 				8F73261A2694B9F9002DCDA7 /* SaveGameDocument.swift */,
-				8F5B771E26D8187D00B2AA7E /* Document Picker */,
 				8F5B771526D8129B00B2AA7E /* Settings */,
 				8F73261E2694B9FC002DCDA7 /* Assets.xcassets */,
 				8F7326232694B9FC002DCDA7 /* Info.plist */,
@@ -203,7 +207,7 @@
 			);
 			name = "SV Saves";
 			packageProductDependencies = (
-				8F957E3E26DD442F00ACA52F /* SDGParser */,
+				8F2F5E2C28C8FE6700C7D749 /* SDGParser */,
 			);
 			productName = "SV Saves";
 			productReference = 8F7326152694B9F9002DCDA7 /* SV Saves.app */;
@@ -278,7 +282,6 @@
 			);
 			mainGroup = 8F73260C2694B9F9002DCDA7;
 			packageReferences = (
-				8F957E3D26DD442F00ACA52F /* XCRemoteSwiftPackageReference "SDGParser" */,
 			);
 			productRefGroup = 8F7326162694B9F9002DCDA7 /* Products */;
 			projectDirPath = "";
@@ -323,18 +326,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F5B771426D8124100B2AA7E /* Settings.swift in Sources */,
-				8F5B772026D8194900B2AA7E /* DocumentPickerCoordinator.swift in Sources */,
 				8F5D8FE726D7E2A300E0FA08 /* RootScene.swift in Sources */,
 				8F73261B2694B9F9002DCDA7 /* SaveGameDocument.swift in Sources */,
 				8F5B772826D9333400B2AA7E /* GameRowView.swift in Sources */,
+				8F2F5E3028C9072500C7D749 /* Player.swift in Sources */,
 				8F5D8FE926D7E38000E0FA08 /* IntroView.swift in Sources */,
 				8F5B771726D812BC00B2AA7E /* Setting.swift in Sources */,
 				8F5B772226D90B4100B2AA7E /* DirectoryView.swift in Sources */,
-				8F5B771B26D8157700B2AA7E /* RootView.swift in Sources */,
 				8F7326192694B9F9002DCDA7 /* SV_SavesApp.swift in Sources */,
 				8F5B772626D90CA600B2AA7E /* Game.swift in Sources */,
 				8F5B771926D814B300B2AA7E /* SettingsKey.swift in Sources */,
-				8F5B771D26D8185900B2AA7E /* DocumentPicker.swift in Sources */,
 				8F73261D2694B9F9002DCDA7 /* ContentView.swift in Sources */,
 				8F5B772A26D933D000B2AA7E /* GameView.swift in Sources */,
 				8F5B772426D90BBD00B2AA7E /* GameManager.swift in Sources */,
@@ -507,6 +508,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -538,6 +540,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -688,21 +691,9 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		8F957E3D26DD442F00ACA52F /* XCRemoteSwiftPackageReference "SDGParser" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/utahwithak/SDGParser";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		8F957E3E26DD442F00ACA52F /* SDGParser */ = {
+		8F2F5E2C28C8FE6700C7D749 /* SDGParser */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8F957E3D26DD442F00ACA52F /* XCRemoteSwiftPackageReference "SDGParser" */;
 			productName = SDGParser;
 		};
 /* End XCSwiftPackageProductDependency section */

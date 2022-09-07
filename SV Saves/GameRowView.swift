@@ -11,20 +11,19 @@ import SwiftUI
 
 struct GameRowView: View {
     
-    @ObservedObject var game: Game
+    @ObservedObject
+    var game: Game
     
     var body: some View {
         VStack {
-            if game.isLoading {
-                ProgressView()
-            } else {
-                Text(game.farmName)
-                
-            }
-        }.onAppear {
-            Task {
-                await game.loadName()
-            }
+                HStack {
+                    Text(game.player.farmName)
+                    if !game.player.name.isEmpty {
+                        Text(" - ")
+                        Text(game.player.name)
+                    }
+                }                
+
         }
         
     }

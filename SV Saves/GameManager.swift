@@ -9,22 +9,29 @@ import Foundation
 import SwiftUI
 import Combine
 
-
+@MainActor
 class GameManager : ObservableObject {
     
-    private var rootURL: Published<URL?>
+    private var urlPublisher: AnyPublisher<URL?, Never>
     private var subscription: AnyCancellable?
     
-    @Published var canAccessUrl = false
-    
-    init(rootURL: Published<URL?>) {
-        self.rootURL = rootURL
+    @Published
+    var canAccessUrl = false
+
+    @Published
+    private var currentURL: URL?
+
+    init(url: URL, publisher: AnyPublisher<URL?, Never>) {
+        self.currentURL = url
+        self.urlPublisher = publisher
         
         self.canAccessUrl = true
         self.games = []
         
-        subscription = self.rootURL.projectedValue.sink { url in
-            self.refresh(with: url)
+        self.urlPublisher.assign(to: &$currentURL)
+
+        subscription = $currentURL.sink { [weak self] url in
+            self?.refresh(with: url)
         }
     }
     
@@ -41,8 +48,8 @@ class GameManager : ObservableObject {
     @Published
     var hasGames = false
     
-    private func refresh(with newSetting: URL?) {
-        guard let url = newSetting else {
+    func refresh(with newSetting: URL? = nil) {
+        guard let url = newSetting ?? currentURL else {
             canAccessUrl = false
             return
         }
@@ -56,19 +63,38 @@ class GameManager : ObservableObject {
             }
             
             if let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys:[ .isDirectoryKey], options: [.skipsSubdirectoryDescendants]) {
-                
-                for case let fileURL as URL in enumerator {
-                    guard let resourceValues = try? fileURL.resourceValues(forKeys: [.isDirectoryKey]),
-                          let isDirectory = resourceValues.isDirectory
-                    else {
-                        continue
+
+                Task {
+                    let games = await withTaskGroup(of: Game?.self, returning: [Game].self) { group in
+
+                        var games = [Game?]()
+
+                        for case let fileURL as URL in enumerator {
+                            guard let resourceValues = try? fileURL.resourceValues(forKeys: [.isDirectoryKey]),
+                                  let isDirectory = resourceValues.isDirectory
+                            else {
+                                continue
+                            }
+
+
+                            if isDirectory && isGame(parentDir: fileURL) {
+                                group.addTask {
+                                    try? await Game(path: fileURL)
+                                }
+
+                            }
+
+                        }
+
+                        for await result in group {
+                            games.append(result)
+                        }
+                        return games.compactMap({ $0 })
                     }
-                    
-                    if isDirectory && isGame(parentDir: fileURL) {
-                        games.append(Game(path: fileURL))
-                    }
-                    
+
+                    self.games = games
                 }
+
             }
         }
     }
