@@ -89,7 +89,9 @@ class GameManager : ObservableObject {
                         for await result in group {
                             games.append(result)
                         }
-                        return games.compactMap({ $0 })
+                        return games.compactMap({ $0 }).sorted { lhs, rhs in
+                            lhs.player.farmName < rhs.player.farmName
+                        }
                     }
 
                     self.games = games

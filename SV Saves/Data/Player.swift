@@ -18,6 +18,9 @@ class Player: ObservableObject {
     @Published
     var farmName: String
 
+    @Published
+    var money: Int
+
     private var subscriptions = Set<AnyCancellable>()
 
     init(player: SDGParser.Player) {
@@ -25,9 +28,12 @@ class Player: ObservableObject {
 
         name = accessor.name
         farmName = accessor.farmName
+        money = accessor.money
 
         $name.assign(to: \.name, on: accessor).store(in: &subscriptions)
         $farmName.assign(to: \.farmName, on: accessor).store(in: &subscriptions)
+        $money.assign(to: \.money, on: accessor).store(in: &subscriptions)
     }
+
 
 }

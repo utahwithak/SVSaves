@@ -22,7 +22,19 @@ class Game : ObservableObject, Identifiable {
 
     @Published
     public private(set) var accessor: SDGParser.Game
-    
+
+    @Published
+    public var chanceToRainTomorrow: Double
+
+    @Published
+    public var season: Season
+
+    @Published
+    public var dayOfMonth: Int
+
+    @Published
+    public var year: Int
+
     private var gamePath: URL {
         let name = path.lastPathComponent
         return path.appendingPathComponent(name)
@@ -36,13 +48,24 @@ class Game : ObservableObject, Identifiable {
         let name = path.lastPathComponent
         let accessor = try await Parser.parse(game: path.appendingPathComponent(name))
         self.accessor = accessor
+
         player = Player(player: accessor.player)
+        chanceToRainTomorrow = accessor.chanceToRainTomorrow
+        season = accessor.currentSeason
+        dayOfMonth = accessor.dayOfMonth
+        year = accessor.currentYear
+
 
         $accessor
             .map { newGame in
                 Player(player: newGame.player)
             }
             .assign(to: &$player)
+        $chanceToRainTomorrow.assign(to: \.chanceToRainTomorrow, on: accessor).store(in: &subscriptions)
+        $season.assign(to: \.currentSeason, on: accessor).store(in: &subscriptions)
+        $dayOfMonth.assign(to: \.dayOfMonth, on: accessor).store(in: &subscriptions)
+        $year.assign(to: \.currentYear, on: accessor).store(in: &subscriptions)
+
     }
 
     func reload() async throws {

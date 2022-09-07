@@ -36,29 +36,36 @@ struct DirectoryView: View {
                         showDocumentPicker = true
                     }
                 }
-            } .navigationBarTitle(Text("Games"))
-                .toolbar {
-                    ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            showDocumentPicker = true
-                        }) {
-                            Image(systemName: "folder.badge.plus")
-                        }
-                        
-                        
-                    }
+            }
+            .fileImporter(isPresented: $showDocumentPicker, allowedContentTypes: [.folder], onCompletion: { result in
+                switch result {
+                case .success(let url):
+                    settings.stardewValleyFolderLocation = url
+                case .failure(let error):
+                    print("Failed to choose folder: \(error)")
                 }
+            })
+            .navigationBarTitle(Text("Games"))
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        showDocumentPicker = true
+                    }) {
+                        Image(systemName: "folder.badge.plus")
+                    }
+
+
+                }
+            }
             
         }
-        .fileImporter(isPresented: $showDocumentPicker, allowedContentTypes: [.folder], onCompletion: { result in
 
-        })
-//        .sheet(isPresented: $showDocumentPicker) {
-//            print("Dismissed")
-//        } content: {
-//            DocumentPicker(pickedPath: $settings.stardewValleyFolderLocation)
-//        }
-//        
+        //        .sheet(isPresented: $showDocumentPicker) {
+        //            print("Dismissed")
+        //        } content: {
+        //            DocumentPicker(pickedPath: $settings.stardewValleyFolderLocation)
+        //        }
+        //
         
     }
 }
