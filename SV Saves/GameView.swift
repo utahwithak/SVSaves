@@ -15,11 +15,23 @@ struct GameView: View {
 
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
+    @State
+    var promptForRestoreOldFile: Bool = false
+
+    @State
+    var promptForRestoreFromBackup: Bool = false
+
     var body: some View {
 
         Form {
 
-            Section(header: Text("Game")) {
+            Section {
+                Picker("Farm Type", selection: $game.farmType) {
+                    ForEach(FarmType.allCases) {
+                        Text($0.displayName).tag($0)
+                    }
+                }
+
                 Picker("Current Season", selection: $game.season) {
                     ForEach(Season.allCases) {
                         Text($0.displayName).tag($0)
@@ -38,9 +50,63 @@ struct GameView: View {
                         .keyboardType(.numberPad)
                         .multilineTextAlignment(.trailing)
                 }
+
+                HStack {
+                    Text("Sam's Band Name")
+                    TextField("name", text: $game.samBandName)
+                        .multilineTextAlignment(.trailing)
+                }
+                HStack {
+                    Text("Elliot's Book Name")
+                    TextField("name", text: $game.elliottBookName)
+                        .multilineTextAlignment(.trailing)
+                }
+                HStack {
+                    Text("Daily Luck")
+                    TextField("luck value", value: $game.dailyLuck, format:.number)
+                        .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
+                }
+
+                Toggle(isOn: $game.shippingTax) {
+                    Text("Shipping Tax")
+                }
+
+                Toggle(isOn: $game.shouldSpawnMonsters) {
+                    Text("Should Spawn Monsters")
+                }
+            } header: {
+                Text("Game")
             }
 
-            Section(header: Text("Player")) {
+            Section {
+                Toggle(isOn: $game.isRaining) {
+                    Text("Is Raining")
+                }
+
+                Toggle(isOn: $game.bloomDay) {
+                    Text("Bloom Day")
+                }
+
+                Toggle(isOn: $game.isLightning) {
+                    Text("Is Lightning")
+                }
+
+                Toggle(isOn: $game.isSnowing) {
+                    Text("Is Snowing")
+                }
+
+                HStack {
+                    Text("Chance of Rain")
+                    TextField("Value", value: $game.chanceToRainTomorrow, format:.number)
+                        .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
+                }
+            } header: {
+                Text("Weather")
+            }
+
+            Section {
                 HStack {
                     Text("Farm Name")
                     TextField("Name", text: $game.player.farmName)
@@ -58,23 +124,46 @@ struct GameView: View {
                         .keyboardType(.numberPad)
                         .multilineTextAlignment(.trailing)
                 }
+            } header: {
+                Text("Player")
             }
 
-            Section(header: Text("Misc")) {
-                HStack {
-                    Text("Chance of Rain")
-                    TextField("Value", value: $game.chanceToRainTomorrow, format:.number)
-                        .multilineTextAlignment(.trailing)
-                        .keyboardType(.decimalPad)
-                }
+            Section {
+
                 HStack {
                     Text("Game Version")
+                    Spacer()
                     Text(game.accessor.gameVersion)
-                        .multilineTextAlignment(.trailing)
-
                 }
-            }
 
+                if game.canBackupToiCloud {
+                    Button {
+                        game.backupGame()
+                    } label: {
+                        Text("Backup Game Folder")
+                    }
+                }
+
+                Button {
+                    promptForRestoreOldFile = true
+                } label: {
+                    Text("Restore from _old file")
+                        .foregroundColor(.red)
+                }
+
+                if game.hasBackedupVersion {
+                    Button {
+                        promptForRestoreFromBackup = true
+                    } label: {
+                        Text("Restore from backup files")
+                            .foregroundColor(.red)
+                    }
+                }
+
+
+            } header: {
+                Text("Misc")
+            }
         }
         .navigationTitle($game.player.farmName)
         .navigationBarTitleDisplayMode(.inline)
@@ -84,6 +173,14 @@ struct GameView: View {
         }, trailing: Button(action: saveGame){
             Text("Save")
         })
+        .alert("Are you sure you want to restore from the _old file?", isPresented: $promptForRestoreOldFile) {
+            Button("Cancel", role: .cancel) { }
+
+            Button("Restore", role: .destructive) {
+                game.restoreOldFile()
+            }
+
+        }
     }
 
     let doubleFormatter: NumberFormatter = {

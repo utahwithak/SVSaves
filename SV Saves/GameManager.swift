@@ -22,6 +22,9 @@ class GameManager : ObservableObject {
     private var currentURL: URL?
 
     init(url: URL, publisher: AnyPublisher<URL?, Never>) {
+
+        FileManager.default.createBackupFolderIfNeeded()
+
         self.currentURL = url
         self.urlPublisher = publisher
         
