@@ -120,9 +120,11 @@ class Player: ObservableObject {
 
     private var subscriptions = Set<AnyCancellable>()
 
+    let inventory: Inventory
+
     init(player: SDGParser.Player) {
         self.accessor = player
-
+        self.inventory = Inventory(inventory: player.inventory)
         friendshipData = FriendshipData(accessor: player.friendshipData)
         experiencePoints = ExperiencePoints(experiencePoints: player.experiencePoints)
         

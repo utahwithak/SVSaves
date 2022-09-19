@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		8F2F5E2D28C8FE6700C7D749 /* SDGParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8F2F5E2C28C8FE6700C7D749 /* SDGParser */; };
 		8F2F5E3028C9072500C7D749 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2F5E2F28C9072500C7D749 /* Player.swift */; };
+		8F34284828D8DAE500C706EB /* InventoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F34284728D8DAE500C706EB /* InventoryView.swift */; };
+		8F34284A28D8DD7900C706EB /* Inventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F34284928D8DD7900C706EB /* Inventory.swift */; };
 		8F5B771426D8124100B2AA7E /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B771326D8124100B2AA7E /* Settings.swift */; };
 		8F5B771726D812BC00B2AA7E /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B771626D812BC00B2AA7E /* Setting.swift */; };
 		8F5B771926D814B300B2AA7E /* SettingsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B771826D814B300B2AA7E /* SettingsKey.swift */; };
@@ -56,6 +58,8 @@
 /* Begin PBXFileReference section */
 		8F2F5E2A28C8FE5D00C7D749 /* SDGParser */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SDGParser; sourceTree = "<group>"; };
 		8F2F5E2F28C9072500C7D749 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		8F34284728D8DAE500C706EB /* InventoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryView.swift; sourceTree = "<group>"; };
+		8F34284928D8DD7900C706EB /* Inventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inventory.swift; sourceTree = "<group>"; };
 		8F5B771326D8124100B2AA7E /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		8F5B771626D812BC00B2AA7E /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		8F5B771826D814B300B2AA7E /* SettingsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsKey.swift; sourceTree = "<group>"; };
@@ -128,6 +132,7 @@
 				8F2F5E2F28C9072500C7D749 /* Player.swift */,
 				8F66501328D4FBB90096C703 /* ExperiencePoints.swift */,
 				8F66500A28D4C7A90096C703 /* FriendshipData.swift */,
+				8F34284928D8DD7900C706EB /* Inventory.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -150,6 +155,7 @@
 				8F66500828D4C7140096C703 /* FriendshipView.swift */,
 				8F66501128D4F5160096C703 /* PlayerUpgrades.swift */,
 				8F66501528D4FCC60096C703 /* ExperienceView.swift */,
+				8F34284728D8DAE500C706EB /* InventoryView.swift */,
 			);
 			path = "Player Views";
 			sourceTree = "<group>";
@@ -359,6 +365,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F34284A28D8DD7900C706EB /* Inventory.swift in Sources */,
 				8F5B771426D8124100B2AA7E /* Settings.swift in Sources */,
 				8F5D8FE726D7E2A300E0FA08 /* RootScene.swift in Sources */,
 				8F73261B2694B9F9002DCDA7 /* SaveGameDocument.swift in Sources */,
@@ -377,6 +384,7 @@
 				8F66500F28D4ECB60096C703 /* AttackViews.swift in Sources */,
 				8F7326192694B9F9002DCDA7 /* SV_SavesApp.swift in Sources */,
 				8F5B772626D90CA600B2AA7E /* Game.swift in Sources */,
+				8F34284828D8DAE500C706EB /* InventoryView.swift in Sources */,
 				8F5B771926D814B300B2AA7E /* SettingsKey.swift in Sources */,
 				8F73261D2694B9F9002DCDA7 /* ContentView.swift in Sources */,
 				8F5B772A26D933D000B2AA7E /* GameView.swift in Sources */,

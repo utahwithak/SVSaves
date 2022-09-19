@@ -45,6 +45,10 @@ struct PlayerForm: View {
 
             }
 
+            NavigationLink("Inventory") {
+                InventoryView(inventory: player.inventory)
+            }
+
             if !player.friendshipData.friendships.isEmpty {
                 NavigationLink("Friendship Data") {
                     FriendshipView(data: player.friendshipData)
