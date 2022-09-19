@@ -19,6 +19,13 @@
 		8F5B772A26D933D000B2AA7E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B772926D933D000B2AA7E /* GameView.swift */; };
 		8F5D8FE726D7E2A300E0FA08 /* RootScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5D8FE626D7E2A300E0FA08 /* RootScene.swift */; };
 		8F5D8FE926D7E38000E0FA08 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5D8FE826D7E38000E0FA08 /* IntroView.swift */; };
+		8F66500928D4C7140096C703 /* FriendshipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F66500828D4C7140096C703 /* FriendshipView.swift */; };
+		8F66500B28D4C7A90096C703 /* FriendshipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F66500A28D4C7A90096C703 /* FriendshipData.swift */; };
+		8F66500D28D4EBCD0096C703 /* PersonForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F66500C28D4EBCD0096C703 /* PersonForm.swift */; };
+		8F66500F28D4ECB60096C703 /* AttackViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F66500E28D4ECB60096C703 /* AttackViews.swift */; };
+		8F66501228D4F5160096C703 /* PlayerUpgrades.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F66501128D4F5160096C703 /* PlayerUpgrades.swift */; };
+		8F66501428D4FBB90096C703 /* ExperiencePoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F66501328D4FBB90096C703 /* ExperiencePoints.swift */; };
+		8F66501628D4FCC60096C703 /* ExperienceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F66501528D4FCC60096C703 /* ExperienceView.swift */; };
 		8F667EF328CB7EB100696790 /* Filemanager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F667EF228CB7EB100696790 /* Filemanager+Extensions.swift */; };
 		8F7326192694B9F9002DCDA7 /* SV_SavesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7326182694B9F9002DCDA7 /* SV_SavesApp.swift */; };
 		8F73261B2694B9F9002DCDA7 /* SaveGameDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F73261A2694B9F9002DCDA7 /* SaveGameDocument.swift */; };
@@ -59,6 +66,13 @@
 		8F5B772926D933D000B2AA7E /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		8F5D8FE626D7E2A300E0FA08 /* RootScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootScene.swift; sourceTree = "<group>"; };
 		8F5D8FE826D7E38000E0FA08 /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
+		8F66500828D4C7140096C703 /* FriendshipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendshipView.swift; sourceTree = "<group>"; };
+		8F66500A28D4C7A90096C703 /* FriendshipData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendshipData.swift; sourceTree = "<group>"; };
+		8F66500C28D4EBCD0096C703 /* PersonForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonForm.swift; sourceTree = "<group>"; };
+		8F66500E28D4ECB60096C703 /* AttackViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackViews.swift; sourceTree = "<group>"; };
+		8F66501128D4F5160096C703 /* PlayerUpgrades.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerUpgrades.swift; sourceTree = "<group>"; };
+		8F66501328D4FBB90096C703 /* ExperiencePoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperiencePoints.swift; sourceTree = "<group>"; };
+		8F66501528D4FCC60096C703 /* ExperienceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceView.swift; sourceTree = "<group>"; };
 		8F667EF128CB7A7800696790 /* SV Saves.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SV Saves.entitlements"; sourceTree = "<group>"; };
 		8F667EF228CB7EB100696790 /* Filemanager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Filemanager+Extensions.swift"; sourceTree = "<group>"; };
 		8F7326152694B9F9002DCDA7 /* SV Saves.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SV Saves.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,6 +126,8 @@
 			children = (
 				8F5B772526D90CA600B2AA7E /* Game.swift */,
 				8F2F5E2F28C9072500C7D749 /* Player.swift */,
+				8F66501328D4FBB90096C703 /* ExperiencePoints.swift */,
+				8F66500A28D4C7A90096C703 /* FriendshipData.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -124,6 +140,18 @@
 				8F5B771826D814B300B2AA7E /* SettingsKey.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		8F66501028D4F5020096C703 /* Player Views */ = {
+			isa = PBXGroup;
+			children = (
+				8F66500C28D4EBCD0096C703 /* PersonForm.swift */,
+				8F66500E28D4ECB60096C703 /* AttackViews.swift */,
+				8F66500828D4C7140096C703 /* FriendshipView.swift */,
+				8F66501128D4F5160096C703 /* PlayerUpgrades.swift */,
+				8F66501528D4FCC60096C703 /* ExperienceView.swift */,
+			);
+			path = "Player Views";
 			sourceTree = "<group>";
 		};
 		8F73260C2694B9F9002DCDA7 = {
@@ -160,6 +188,7 @@
 				8F5B772126D90B4100B2AA7E /* DirectoryView.swift */,
 				8F5B772726D9333400B2AA7E /* GameRowView.swift */,
 				8F5B772926D933D000B2AA7E /* GameView.swift */,
+				8F66501028D4F5020096C703 /* Player Views */,
 				8F5B772326D90BBD00B2AA7E /* GameManager.swift */,
 				8F73261A2694B9F9002DCDA7 /* SaveGameDocument.swift */,
 				8F667EF228CB7EB100696790 /* Filemanager+Extensions.swift */,
@@ -333,12 +362,19 @@
 				8F5B771426D8124100B2AA7E /* Settings.swift in Sources */,
 				8F5D8FE726D7E2A300E0FA08 /* RootScene.swift in Sources */,
 				8F73261B2694B9F9002DCDA7 /* SaveGameDocument.swift in Sources */,
+				8F66501228D4F5160096C703 /* PlayerUpgrades.swift in Sources */,
 				8F5B772826D9333400B2AA7E /* GameRowView.swift in Sources */,
+				8F66500D28D4EBCD0096C703 /* PersonForm.swift in Sources */,
 				8F2F5E3028C9072500C7D749 /* Player.swift in Sources */,
+				8F66500B28D4C7A90096C703 /* FriendshipData.swift in Sources */,
+				8F66501628D4FCC60096C703 /* ExperienceView.swift in Sources */,
 				8F5D8FE926D7E38000E0FA08 /* IntroView.swift in Sources */,
+				8F66500928D4C7140096C703 /* FriendshipView.swift in Sources */,
 				8F5B771726D812BC00B2AA7E /* Setting.swift in Sources */,
 				8F5B772226D90B4100B2AA7E /* DirectoryView.swift in Sources */,
 				8F667EF328CB7EB100696790 /* Filemanager+Extensions.swift in Sources */,
+				8F66501428D4FBB90096C703 /* ExperiencePoints.swift in Sources */,
+				8F66500F28D4ECB60096C703 /* AttackViews.swift in Sources */,
 				8F7326192694B9F9002DCDA7 /* SV_SavesApp.swift in Sources */,
 				8F5B772626D90CA600B2AA7E /* Game.swift in Sources */,
 				8F5B771926D814B300B2AA7E /* SettingsKey.swift in Sources */,

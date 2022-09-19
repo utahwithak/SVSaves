@@ -73,6 +73,7 @@ class GameManager : ObservableObject {
                         var games = [Game?]()
 
                         for case let fileURL as URL in enumerator {
+                            print("checking:\(fileURL.lastPathComponent)")
                             guard let resourceValues = try? fileURL.resourceValues(forKeys: [.isDirectoryKey]),
                                   let isDirectory = resourceValues.isDirectory
                             else {
@@ -85,6 +86,8 @@ class GameManager : ObservableObject {
                                     try? await Game(path: fileURL)
                                 }
 
+                            } else {
+                                print("No game found at:\(fileURL.lastPathComponent)")
                             }
 
                         }

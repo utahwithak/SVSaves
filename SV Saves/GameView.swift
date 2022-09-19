@@ -107,23 +107,10 @@ struct GameView: View {
             }
 
             Section {
-                HStack {
-                    Text("Farm Name")
-                    TextField("Name", text: $game.player.farmName)
-                        .multilineTextAlignment(.trailing)
-                }
-                HStack {
-                    Text("Player Name")
-                    TextField("Name", text: $game.player.name)
-                        .multilineTextAlignment(.trailing)
-                }
-
-                HStack {
-                    Text("Money")
-                    TextField("", value: $game.player.money, format: .number)
-                        .keyboardType(.numberPad)
-                        .multilineTextAlignment(.trailing)
-                }
+                PlayerForm(player: game.player)
+                AttackView(player: game.player)
+                PlayerUpgrades(player: game.player)
+                ExperienceView(player: game.player)
             } header: {
                 Text("Player")
             }
