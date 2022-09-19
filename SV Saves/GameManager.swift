@@ -21,6 +21,9 @@ class GameManager : ObservableObject {
     @Published
     private var currentURL: URL?
 
+    @Published
+    var isLoading = false
+
     init(url: URL, publisher: AnyPublisher<URL?, Never>) {
 
         FileManager.default.createBackupFolderIfNeeded()
@@ -68,6 +71,7 @@ class GameManager : ObservableObject {
             if let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys:[ .isDirectoryKey], options: [.skipsSubdirectoryDescendants]) {
 
                 Task {
+                    self.isLoading = true
                     let games = await withTaskGroup(of: Game?.self, returning: [Game].self) { group in
 
                         var games = [Game?]()
@@ -99,6 +103,7 @@ class GameManager : ObservableObject {
                             lhs.player.farmName < rhs.player.farmName
                         }
                     }
+                    self.isLoading = false
 
                     self.games = games
                 }

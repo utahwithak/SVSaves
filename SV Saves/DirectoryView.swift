@@ -10,7 +10,8 @@ import SwiftUI
 
 struct DirectoryView: View {
     
-    @ObservedObject var manager: GameManager
+    @ObservedObject
+    var manager: GameManager
     
     @ObservedObject var settings: Settings
     
@@ -21,14 +22,20 @@ struct DirectoryView: View {
         NavigationStack {
             VStack {
                 if manager.canAccessUrl {
-                    List {
-                        ForEach(manager.games) { game in
-                            NavigationLink(destination: GameView(game: game)) {
-                                GameRowView(game: game)
-                            }
+                    if manager.isLoading {
+                        ProgressView {
+                            Text("Loading Games")
                         }
-                    }.refreshable {
-                        manager.refresh()
+                    } else {
+                        List {
+                            ForEach(manager.games) { game in
+                                NavigationLink(destination: GameView(game: game)) {
+                                    GameRowView(game: game)
+                                }
+                            }
+                        }.refreshable {
+                            manager.refresh()
+                        }
                     }
                 }
                 else {
@@ -59,13 +66,6 @@ struct DirectoryView: View {
             }
             
         }
-
-        //        .sheet(isPresented: $showDocumentPicker) {
-        //            print("Dismissed")
-        //        } content: {
-        //            DocumentPicker(pickedPath: $settings.stardewValleyFolderLocation)
-        //        }
-        //
         
     }
 }

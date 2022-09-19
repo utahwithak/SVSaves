@@ -9,10 +9,17 @@ import Foundation
 import SwiftUI
 
 struct RootScene: Scene {
+
+    @ObservedObject
+    var settings = Settings()
     
     var body: some Scene {
         WindowGroup {
-            IntroView(settings: Settings())
+            if let url = settings.stardewValleyFolderLocation {
+                DirectoryView(manager: GameManager(url: url, publisher: settings.$stardewValleyFolderLocation.eraseToAnyPublisher()), settings: settings)
+            } else {
+                IntroView(settings: settings)
+            }
         }
     }
     

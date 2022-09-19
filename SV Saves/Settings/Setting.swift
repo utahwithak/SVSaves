@@ -12,6 +12,8 @@ private var cancellables = [Setting : AnyCancellable]()
 
 enum Setting: String {
     case stardewValleyFolderLocation
+    case alwaysBackupOnSave
+
 }
 
 extension Published {

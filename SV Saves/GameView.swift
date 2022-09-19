@@ -13,13 +13,20 @@ struct GameView: View {
     @ObservedObject
     var game: Game
 
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Environment(\.settings)
+    var settings: Settings
+
+    @Environment(\.presentationMode)
+    var presentationMode: Binding<PresentationMode>
 
     @State
     var promptForRestoreOldFile: Bool = false
 
     @State
     var promptForRestoreFromBackup: Bool = false
+
+    @State
+    var promptForSaveBackup: Bool = false
 
     var body: some View {
 
@@ -140,7 +147,12 @@ struct GameView: View {
 
                 if game.hasBackedupVersion {
                     Button {
-                        promptForRestoreFromBackup = true
+                        if !settings.alwaysBackupOnSave {
+                            promptForRestoreFromBackup = true
+                        } else {
+                            saveGame()
+                        }
+
                     } label: {
                         Text("Restore from backup files")
                             .foregroundColor(.red)
@@ -155,17 +167,45 @@ struct GameView: View {
         .navigationTitle($game.player.farmName)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: Button(action: discardEdits){
-            Text("Cancel")
-        }, trailing: Button(action: saveGame){
-            Text("Save")
-        })
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: discardEdits){
+                    Text("Cancel")
+                }
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    promptForSaveBackup = true
+                } label: {
+                    Text("Save")
+                }
+            }
+
+
+        }
         .alert("Are you sure you want to restore from the _old file?", isPresented: $promptForRestoreOldFile) {
             Button("Cancel", role: .cancel) { }
 
             Button("Restore", role: .destructive) {
                 game.restoreOldFile()
             }
+
+        }
+        .alert("Create backup before saving?", isPresented: $promptForSaveBackup) {
+            Button("Backup") {
+                game.backupGame()
+                saveGame()
+            }
+            Button("Always Backup", role: .cancel) {
+                settings.alwaysBackupOnSave = true
+                game.backupGame()
+                saveGame()
+            }
+
+            Button("Just Save", role: .destructive) {
+                saveGame()
+            }
+
 
         }
     }

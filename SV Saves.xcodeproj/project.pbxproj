@@ -30,8 +30,6 @@
 		8F66501628D4FCC60096C703 /* ExperienceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F66501528D4FCC60096C703 /* ExperienceView.swift */; };
 		8F667EF328CB7EB100696790 /* Filemanager+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F667EF228CB7EB100696790 /* Filemanager+Extensions.swift */; };
 		8F7326192694B9F9002DCDA7 /* SV_SavesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7326182694B9F9002DCDA7 /* SV_SavesApp.swift */; };
-		8F73261B2694B9F9002DCDA7 /* SaveGameDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F73261A2694B9F9002DCDA7 /* SaveGameDocument.swift */; };
-		8F73261D2694B9F9002DCDA7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F73261C2694B9F9002DCDA7 /* ContentView.swift */; };
 		8F73261F2694B9FC002DCDA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F73261E2694B9FC002DCDA7 /* Assets.xcassets */; };
 		8F7326222694B9FC002DCDA7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F7326212694B9FC002DCDA7 /* Preview Assets.xcassets */; };
 		8F73262D2694B9FC002DCDA7 /* SV_SavesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F73262C2694B9FC002DCDA7 /* SV_SavesTests.swift */; };
@@ -81,8 +79,6 @@
 		8F667EF228CB7EB100696790 /* Filemanager+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Filemanager+Extensions.swift"; sourceTree = "<group>"; };
 		8F7326152694B9F9002DCDA7 /* SV Saves.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SV Saves.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F7326182694B9F9002DCDA7 /* SV_SavesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SV_SavesApp.swift; sourceTree = "<group>"; };
-		8F73261A2694B9F9002DCDA7 /* SaveGameDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveGameDocument.swift; sourceTree = "<group>"; };
-		8F73261C2694B9F9002DCDA7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8F73261E2694B9FC002DCDA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F7326212694B9FC002DCDA7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8F7326232694B9FC002DCDA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -190,13 +186,11 @@
 				8F2F5E2E28C9061F00C7D749 /* Data */,
 				8F5D8FE626D7E2A300E0FA08 /* RootScene.swift */,
 				8F5D8FE826D7E38000E0FA08 /* IntroView.swift */,
-				8F73261C2694B9F9002DCDA7 /* ContentView.swift */,
 				8F5B772126D90B4100B2AA7E /* DirectoryView.swift */,
 				8F5B772726D9333400B2AA7E /* GameRowView.swift */,
 				8F5B772926D933D000B2AA7E /* GameView.swift */,
 				8F66501028D4F5020096C703 /* Player Views */,
 				8F5B772326D90BBD00B2AA7E /* GameManager.swift */,
-				8F73261A2694B9F9002DCDA7 /* SaveGameDocument.swift */,
 				8F667EF228CB7EB100696790 /* Filemanager+Extensions.swift */,
 				8F5B771526D8129B00B2AA7E /* Settings */,
 				8F73261E2694B9FC002DCDA7 /* Assets.xcassets */,
@@ -368,7 +362,6 @@
 				8F34284A28D8DD7900C706EB /* Inventory.swift in Sources */,
 				8F5B771426D8124100B2AA7E /* Settings.swift in Sources */,
 				8F5D8FE726D7E2A300E0FA08 /* RootScene.swift in Sources */,
-				8F73261B2694B9F9002DCDA7 /* SaveGameDocument.swift in Sources */,
 				8F66501228D4F5160096C703 /* PlayerUpgrades.swift in Sources */,
 				8F5B772826D9333400B2AA7E /* GameRowView.swift in Sources */,
 				8F66500D28D4EBCD0096C703 /* PersonForm.swift in Sources */,
@@ -386,7 +379,6 @@
 				8F5B772626D90CA600B2AA7E /* Game.swift in Sources */,
 				8F34284828D8DAE500C706EB /* InventoryView.swift in Sources */,
 				8F5B771926D814B300B2AA7E /* SettingsKey.swift in Sources */,
-				8F73261D2694B9F9002DCDA7 /* ContentView.swift in Sources */,
 				8F5B772A26D933D000B2AA7E /* GameView.swift in Sources */,
 				8F5B772426D90BBD00B2AA7E /* GameManager.swift in Sources */,
 			);

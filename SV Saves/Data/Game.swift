@@ -81,7 +81,7 @@ class Game : ObservableObject, Identifiable {
 
     private var subscriptions = Set<AnyCancellable>()
     
-    init(path: URL ) async throws {
+    init(path: URL) async throws {
         id = path.path
         self.path = path
         let name = path.lastPathComponent
