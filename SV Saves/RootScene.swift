@@ -15,8 +15,8 @@ struct RootScene: Scene {
     
     var body: some Scene {
         WindowGroup {
-            if let url = settings.stardewValleyFolderLocation {
-                DirectoryView(manager: GameManager(url: url, publisher: settings.$stardewValleyFolderLocation.eraseToAnyPublisher()), settings: settings)
+            if let manager = GameManager(settings: settings) {
+                DirectoryView(manager: manager, settings: settings)
             } else {
                 IntroView(settings: settings)
             }

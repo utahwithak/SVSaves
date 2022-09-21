@@ -42,7 +42,7 @@ struct IntroView: View {
             case .success(let url):
                 settings.stardewValleyFolderLocation = url
             case .failure(let error):
-                print("Failed to choose folder: \(error)")
+                Log.error("Failed to choose folder: \(error)")
             }
         })
     }

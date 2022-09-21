@@ -24,12 +24,33 @@ class GameManager : ObservableObject {
     @Published
     var isLoading = false
 
-    init(url: URL, publisher: AnyPublisher<URL?, Never>) {
+    let settings: Settings
 
+    var localBackupDirectory: URL {
+        FileManager.default.documentsDirectory.appendingPathComponent("Backups", isDirectory: true)
+    }
+
+    var cloudBackupDirectory: URL? {
         FileManager.default.createBackupFolderIfNeeded()
+        return FileManager.default.containerUrl?.appendingPathComponent("Backups", isDirectory: true)
+    }
+
+    static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd-HHmmssZ"
+        return formatter
+    }()
+
+    init?(settings: Settings) {
+        guard let url = settings.stardewValleyFolderLocation else {
+            return nil
+        }
+
+        self.settings = settings
+
 
         self.currentURL = url
-        self.urlPublisher = publisher
+        self.urlPublisher = settings.$stardewValleyFolderLocation.eraseToAnyPublisher()
         
         self.canAccessUrl = true
         self.games = []
@@ -39,6 +60,11 @@ class GameManager : ObservableObject {
         subscription = $currentURL.sink { [weak self] url in
             self?.refresh(with: url)
         }
+
+        Log.info("SV folder: \(url)")
+
+        Log.info("Local Backup folder: \(localBackupDirectory)")
+        Log.info("Cloud Backup folder: \(String(describing: cloudBackupDirectory))")
     }
     
     deinit {
@@ -64,10 +90,6 @@ class GameManager : ObservableObject {
         games.removeAll()
         if canAccessUrl {
             
-            defer {
-                url.stopAccessingSecurityScopedResource()
-            }
-            
             if let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys:[ .isDirectoryKey], options: [.skipsSubdirectoryDescendants]) {
 
                 Task {
@@ -87,7 +109,13 @@ class GameManager : ObservableObject {
 
                             if isDirectory && isGame(parentDir: fileURL) {
                                 group.addTask {
-                                    try? await Game(path: fileURL)
+                                    do {
+                                        return try await Game(path: fileURL, delegate: self)
+                                    } catch {
+                                        Log.error("Failed to load game:\(fileURL.lastPathComponent), error:\(error)")
+                                        return nil
+
+                                    }
                                 }
 
                             } else {
@@ -106,6 +134,8 @@ class GameManager : ObservableObject {
                     self.isLoading = false
 
                     self.games = games
+
+                    url.stopAccessingSecurityScopedResource()
                 }
 
             }
@@ -119,6 +149,105 @@ class GameManager : ObservableObject {
         let exists = FileManager.default.fileExists(atPath: parentDir.appendingPathComponent(suspectedName).path, isDirectory: &isDir)
         return exists && !isDir.boolValue
     }
-    
-    
+
+    func backupAllGames() {
+        for game in games {
+            backupGame(game)
+        }
+    }
+
+    func backupGame(_ game: Game) {
+        if settings.shouldBackupToiCloud {
+            guard let cloudBackupDirectory else {
+                Log.error("Cloud backup directory not available")
+                return
+            }
+            backupGame(game, to: cloudBackupDirectory)
+        } else {
+            backupGame(game, to: localBackupDirectory)
+        }
+    }
+
+    func backupGame(_ game: Game, to: URL) {
+        let gameName = game.path.lastPathComponent
+        // create backup folder for this game
+        let gameBackupFolder = to.appending(component: gameName)
+
+        let versionFolderName = Self.dateFormatter.string(from: Date())
+        let destination = gameBackupFolder.appendingPathComponent(versionFolderName, isDirectory: true)
+
+        do {
+            try FileManager.default.createDirectory(at: destination, withIntermediateDirectories: true)
+        } catch {
+            Log.error("Failed to create backup dir:\(error)")
+            return
+
+        }
+
+        do {
+            try FileManager.default.copyItem(at: game.path, to: destination.appendingPathComponent(gameName, isDirectory: true))
+        } catch {
+            Log.error("Failed to copy game to backup folder: \(error)")
+        }
+
+    }
+
+    func removeAllBackups() {
+        removeLocalBackups()
+        removeiCloudBackups()
+    }
+
+
+    private func removeLocalBackups() {
+        let localDir = localBackupDirectory
+        do {
+            try FileManager.default.removeItem(at: localDir)
+        } catch {
+            Log.error("Failed to remove local items:\(error)")
+        }
+    }
+
+    private func removeiCloudBackups() {
+        guard let cloudDir = cloudBackupDirectory else {
+            return
+        }
+        do {
+            try FileManager.default.removeItem(at: cloudDir)
+        } catch {
+            Log.error("Failed to remove cloud items:\(error)")
+        }
+    }
+}
+
+extension GameManager: GameDelegate {
+    func backups(for game: Game) -> [Backup] {
+        if settings.shouldBackupToiCloud {
+            guard let cloudBackupDirectory else {
+                Log.error("Cloud backup directory not available")
+                return []
+            }
+            return backups(for: game, in: cloudBackupDirectory)
+        } else {
+            return backups(for: game, in: localBackupDirectory)
+        }
+    }
+
+    func backups(for game: Game, in root: URL) -> [Backup] {
+        let gameName = game.path.lastPathComponent
+        // create backup folder for this game
+        let gameBackupFolder = root.appending(component: gameName)
+        var isDir: ObjCBool = false
+        guard FileManager.default.fileExists(atPath: gameBackupFolder.path, isDirectory: &isDir), isDir.boolValue else {
+            return []
+        }
+
+        do {
+            let paths =  try FileManager.default.contentsOfDirectory(at: gameBackupFolder, includingPropertiesForKeys: nil)
+            return paths.compactMap { Backup(url: $0) }.sorted(by: { $0.date > $1.date })
+        } catch {
+            Log.error("Failed to get contents of directory: \(error)")
+            return []
+        }
+
+    }
 }

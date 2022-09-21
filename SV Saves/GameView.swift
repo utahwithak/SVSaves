@@ -13,8 +13,13 @@ struct GameView: View {
     @ObservedObject
     var game: Game
 
-    @Environment(\.settings)
+    @ObservedObject
     var settings: Settings
+
+    init(game: Game, settings: Settings) {
+        self.game = game
+        self.settings = settings
+    }
 
     @Environment(\.presentationMode)
     var presentationMode: Binding<PresentationMode>
@@ -27,6 +32,9 @@ struct GameView: View {
 
     @State
     var promptForSaveBackup: Bool = false
+
+    @State
+    var showBackups: Bool = false
 
     var body: some View {
 
@@ -130,11 +138,13 @@ struct GameView: View {
                     Text(game.accessor.gameVersion)
                 }
 
-                if game.canBackupToiCloud {
-                    Button {
-                        game.backupGame()
-                    } label: {
-                        Text("Backup Game Folder")
+                Button {
+                    game.backupGame()
+                } label: {
+                    if game.canBackupToiCloud {
+                        Text("Backup Game to iCloud")
+                    } else {
+                        Text("Backup Game")
                     }
                 }
 
@@ -145,27 +155,18 @@ struct GameView: View {
                         .foregroundColor(.red)
                 }
 
-                if game.hasBackedupVersion {
+                if !game.backups.isEmpty {
                     Button {
-                        if !settings.alwaysBackupOnSave {
-                            promptForRestoreFromBackup = true
-                        } else {
-                            saveGame()
-                        }
-
+                        showBackups = true
                     } label: {
-                        Text("Restore from backup files")
-                            .foregroundColor(.red)
+                        Text("Restore from Backups")
                     }
                 }
-
-
             } header: {
                 Text("Misc")
             }
         }
         .navigationTitle($game.player.farmName)
-        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -174,10 +175,17 @@ struct GameView: View {
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    promptForSaveBackup = true
-                } label: {
-                    Text("Save")
+                HStack {
+                    Button {
+                        shareGame()
+                    } label: {
+                        Image(systemName: "square.and.arrow.up")
+                    }
+                    Button {
+                        checkSave()
+                    } label: {
+                        Text("Save")
+                    }
                 }
             }
 
@@ -197,7 +205,7 @@ struct GameView: View {
                 saveGame()
             }
             Button("Always Backup", role: .cancel) {
-                settings.alwaysBackupOnSave = true
+                settings.shouldAlwaysBackupBeforeSave = true
                 game.backupGame()
                 saveGame()
             }
@@ -206,14 +214,40 @@ struct GameView: View {
                 saveGame()
             }
 
+        }
+        .sheet(isPresented: $showBackups) {
+            List(game.backups) { backup in
+                Button {
+                    game.restoreGame(from: backup)
+                    showBackups = false
+                } label: {
+                    Text("\(backup.name)")
+                }
+            }
+            Button {
+                showBackups = false
+            } label: {
+                Text("Cancel")
+            }
 
         }
+
     }
 
     let doubleFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         return formatter
     }()
+
+
+    private func checkSave() {
+        if !settings.shouldAlwaysBackupBeforeSave {
+            promptForSaveBackup = true
+        } else {
+            game.backupGame()
+            saveGame()
+        }
+    }
 
     private func discardEdits() {
         Task {
@@ -236,8 +270,35 @@ struct GameView: View {
 
 
     }
-}
 
+    private func shareGame() {
+        Task { @MainActor in
+            showShareSheet(gameArchive: game.path)
+        }
+    }
+    func showShareSheet(gameArchive: URL) {
+        let activityVC = UIActivityViewController(activityItems: [gameArchive], applicationActivities: nil)
+        if let last = UIApplication.shared.currentUIWindow()?.rootViewController {
+            last.present(activityVC, animated: true, completion: nil)
+        }
+    }
+
+
+}
+private extension UIApplication {
+    func currentUIWindow() -> UIWindow? {
+        let connectedScenes = UIApplication.shared.connectedScenes
+            .filter { $0.activationState == .foregroundActive }
+            .compactMap { $0 as? UIWindowScene }
+
+        let window = connectedScenes.first?
+            .windows
+            .first { $0.isKeyWindow }
+
+        return window
+
+    }
+}
 
 //struct GameView_Previews: PreviewProvider {
 //    static var previews: some View {

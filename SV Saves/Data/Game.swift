@@ -10,18 +10,28 @@ import Combine
 import SDGParser
 import SwiftyXMLParser
 
+protocol GameDelegate: AnyObject {
+    func backupGame(_ game: Game)
+    func backups(for game: Game) -> [Backup]
+}
+
 @MainActor
 class Game : ObservableObject, Identifiable {
 
     let id: String
 
+    weak var delegate: GameDelegate?
+
     @Published
     var player: Player
     
-    private let path: URL
+    let path: URL
 
     @Published
-    public private(set) var hasBackedupVersion = false
+    var isReloading = false
+
+    @Published
+    public private(set) var backups = [Backup]()
 
     @Published
     public private(set) var canBackupToiCloud = false
@@ -81,7 +91,8 @@ class Game : ObservableObject, Identifiable {
 
     private var subscriptions = Set<AnyCancellable>()
     
-    init(path: URL) async throws {
+    init(path: URL, delegate: GameDelegate) async throws {
+        self.delegate = delegate
         id = path.path
         self.path = path
         let name = path.lastPathComponent
@@ -118,6 +129,9 @@ class Game : ObservableObject, Identifiable {
         }
 
         reloadFile()
+        Task {
+            checkForBackup()
+        }
     }
 
     private func reloadFile() {
@@ -167,9 +181,9 @@ class Game : ObservableObject, Identifiable {
 
     }
     
-    func load() async {        
+    func load() async {
         do {
-            accessor = try await Parser.parse(game: gamePath)            
+            accessor = try await Parser.parse(game: gamePath)
         } catch {
             print("Failed:\(error)")
         }
@@ -177,29 +191,54 @@ class Game : ObservableObject, Identifiable {
 
 
     func checkForBackup() {
-
+        self.backups = delegate?.backups(for: self) ?? []
     }
 
     func backupGame() {
-        
+        delegate?.backupGame(self)
+        checkForBackup()
     }
 
     func restoreOldFile() {
+        let oldFile = self.path.appending(path: path.lastPathComponent + "_old")
+        restoreGame(from: oldFile)
+
+    }
+
+    func restoreGame(from backup: Backup) {
         Task {
-            let oldFile = self.path.appending(path: path.lastPathComponent + "_old")
-            print("Old:\(oldFile)")
-            if FileManager.default.fileExists(atPath: oldFile.path) {
+            self.isReloading = true
+            Log.info("restoring everything from: \(backup.url)")
+            guard FileManager.default.fileExists(atPath: backup.url.path) else {
+                return
+            }
+            do {
+                try FileManager.default.removeItem(at: path)
+                try FileManager.default.copyItem(at: backup.url.appendingPathComponent(path.lastPathComponent, isDirectory: true), to: path)
+                try await reload()
+            } catch {
+                Log.error("Failed to copy over item: \(error)")
+            }
+
+            self.isReloading = false
+        }
+    }
+
+    func restoreGame(from src: URL) {
+        Task {
+            self.isReloading = true
+            Log.info("restoring game from: \(src)")
+            if FileManager.default.fileExists(atPath: src.path) {
                 do {
                     try FileManager.default.removeItem(at: gamePath)
-                    try FileManager.default.copyItem(at: oldFile, to: gamePath)
+                    try FileManager.default.copyItem(at: src, to: gamePath)
                     try await reload()
                 } catch {
                     print("Failed to copy over item: \(error)")
                 }
 
             }
-
+            self.isReloading = false
         }
-
     }
 }

@@ -8,11 +8,14 @@
 import Foundation
 import Combine
 
-private var cancellables = [Setting : AnyCancellable]()
 
 enum Setting: String {
     case stardewValleyFolderLocation
     case alwaysBackupOnSave
+    case backupToiCloud
+
+    fileprivate static var cancellables = [Setting : AnyCancellable]()
+
 
 }
 
@@ -31,7 +34,7 @@ extension Published {
         }
         
         self.init(initialValue: value)
-        cancellables[key] = projectedValue.sink { val in
+        Setting.cancellables[key] = projectedValue.sink { val in
             
             guard let data = try? JSONEncoder().encode(val) else {
                 return
@@ -66,7 +69,7 @@ extension Published {
         }
         
         self.init(initialValue: value)
-        cancellables[key] = projectedValue.sink { newValue in
+        Setting.cancellables[key] = projectedValue.sink { newValue in
             guard let url = newValue else {
                 UserDefaults.standard.removeObject(forKey: key.rawValue)
                 return

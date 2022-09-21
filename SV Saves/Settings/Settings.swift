@@ -14,8 +14,10 @@ class Settings: ObservableObject {
     @Published(wrappedValue: nil, key: .stardewValleyFolderLocation)
     public var stardewValleyFolderLocation: URL?
 
-    @Published(wrappedValue: false, key: .alwaysBackupOnSave)
-    public var alwaysBackupOnSave: Bool
+    @Published(wrappedValue: true, key: .alwaysBackupOnSave)
+    public var shouldAlwaysBackupBeforeSave: Bool
 
+    @Published(wrappedValue: false, key: .backupToiCloud)
+    public var shouldBackupToiCloud: Bool
 
 }

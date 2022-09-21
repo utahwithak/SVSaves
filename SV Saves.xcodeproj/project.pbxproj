@@ -7,13 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F18568B28D9DAE100E37847 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F18568A28D9DAE100E37847 /* SettingsView.swift */; };
+		8F18568D28D9EC4800E37847 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F18568C28D9EC4800E37847 /* Log.swift */; };
+		8F18569028D9EC8D00E37847 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F18568F28D9EC8D00E37847 /* Category.swift */; };
+		8F18569228D9ECD200E37847 /* LogSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F18569128D9ECD200E37847 /* LogSystem.swift */; };
+		8F18569428DA00E300E37847 /* Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F18569328DA00E300E37847 /* Backup.swift */; };
 		8F2F5E2D28C8FE6700C7D749 /* SDGParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8F2F5E2C28C8FE6700C7D749 /* SDGParser */; };
 		8F2F5E3028C9072500C7D749 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2F5E2F28C9072500C7D749 /* Player.swift */; };
 		8F34284828D8DAE500C706EB /* InventoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F34284728D8DAE500C706EB /* InventoryView.swift */; };
 		8F34284A28D8DD7900C706EB /* Inventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F34284928D8DD7900C706EB /* Inventory.swift */; };
 		8F5B771426D8124100B2AA7E /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B771326D8124100B2AA7E /* Settings.swift */; };
 		8F5B771726D812BC00B2AA7E /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B771626D812BC00B2AA7E /* Setting.swift */; };
-		8F5B771926D814B300B2AA7E /* SettingsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B771826D814B300B2AA7E /* SettingsKey.swift */; };
 		8F5B772226D90B4100B2AA7E /* DirectoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B772126D90B4100B2AA7E /* DirectoryView.swift */; };
 		8F5B772426D90BBD00B2AA7E /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B772326D90BBD00B2AA7E /* GameManager.swift */; };
 		8F5B772626D90CA600B2AA7E /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B772526D90CA600B2AA7E /* Game.swift */; };
@@ -54,13 +58,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8F18568A28D9DAE100E37847 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		8F18568C28D9EC4800E37847 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		8F18568F28D9EC8D00E37847 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		8F18569128D9ECD200E37847 /* LogSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSystem.swift; sourceTree = "<group>"; };
+		8F18569328DA00E300E37847 /* Backup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Backup.swift; sourceTree = "<group>"; };
 		8F2F5E2A28C8FE5D00C7D749 /* SDGParser */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SDGParser; sourceTree = "<group>"; };
 		8F2F5E2F28C9072500C7D749 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		8F34284728D8DAE500C706EB /* InventoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryView.swift; sourceTree = "<group>"; };
 		8F34284928D8DD7900C706EB /* Inventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inventory.swift; sourceTree = "<group>"; };
 		8F5B771326D8124100B2AA7E /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		8F5B771626D812BC00B2AA7E /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
-		8F5B771826D814B300B2AA7E /* SettingsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsKey.swift; sourceTree = "<group>"; };
 		8F5B772126D90B4100B2AA7E /* DirectoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryView.swift; sourceTree = "<group>"; };
 		8F5B772326D90BBD00B2AA7E /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		8F5B772526D90CA600B2AA7E /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
@@ -114,6 +122,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F18568E28D9EC8400E37847 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				8F18568C28D9EC4800E37847 /* Log.swift */,
+				8F18568F28D9EC8D00E37847 /* Category.swift */,
+				8F18569128D9ECD200E37847 /* LogSystem.swift */,
+			);
+			path = Logging;
+			sourceTree = "<group>";
+		};
 		8F2F5E2B28C8FE6700C7D749 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +146,7 @@
 				8F2F5E2F28C9072500C7D749 /* Player.swift */,
 				8F66501328D4FBB90096C703 /* ExperiencePoints.swift */,
 				8F66500A28D4C7A90096C703 /* FriendshipData.swift */,
+				8F18569328DA00E300E37847 /* Backup.swift */,
 				8F34284928D8DD7900C706EB /* Inventory.swift */,
 			);
 			path = Data;
@@ -138,7 +157,6 @@
 			children = (
 				8F5B771326D8124100B2AA7E /* Settings.swift */,
 				8F5B771626D812BC00B2AA7E /* Setting.swift */,
-				8F5B771826D814B300B2AA7E /* SettingsKey.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -183,15 +201,17 @@
 			children = (
 				8F667EF128CB7A7800696790 /* SV Saves.entitlements */,
 				8F7326182694B9F9002DCDA7 /* SV_SavesApp.swift */,
+				8F5B772326D90BBD00B2AA7E /* GameManager.swift */,
 				8F2F5E2E28C9061F00C7D749 /* Data */,
 				8F5D8FE626D7E2A300E0FA08 /* RootScene.swift */,
 				8F5D8FE826D7E38000E0FA08 /* IntroView.swift */,
 				8F5B772126D90B4100B2AA7E /* DirectoryView.swift */,
+				8F18568A28D9DAE100E37847 /* SettingsView.swift */,
 				8F5B772726D9333400B2AA7E /* GameRowView.swift */,
 				8F5B772926D933D000B2AA7E /* GameView.swift */,
 				8F66501028D4F5020096C703 /* Player Views */,
-				8F5B772326D90BBD00B2AA7E /* GameManager.swift */,
 				8F667EF228CB7EB100696790 /* Filemanager+Extensions.swift */,
+				8F18568E28D9EC8400E37847 /* Logging */,
 				8F5B771526D8129B00B2AA7E /* Settings */,
 				8F73261E2694B9FC002DCDA7 /* Assets.xcassets */,
 				8F7326232694B9FC002DCDA7 /* Info.plist */,
@@ -360,11 +380,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F34284A28D8DD7900C706EB /* Inventory.swift in Sources */,
+				8F18568D28D9EC4800E37847 /* Log.swift in Sources */,
+				8F18568B28D9DAE100E37847 /* SettingsView.swift in Sources */,
 				8F5B771426D8124100B2AA7E /* Settings.swift in Sources */,
 				8F5D8FE726D7E2A300E0FA08 /* RootScene.swift in Sources */,
+				8F18569228D9ECD200E37847 /* LogSystem.swift in Sources */,
 				8F66501228D4F5160096C703 /* PlayerUpgrades.swift in Sources */,
 				8F5B772826D9333400B2AA7E /* GameRowView.swift in Sources */,
 				8F66500D28D4EBCD0096C703 /* PersonForm.swift in Sources */,
+				8F18569428DA00E300E37847 /* Backup.swift in Sources */,
 				8F2F5E3028C9072500C7D749 /* Player.swift in Sources */,
 				8F66500B28D4C7A90096C703 /* FriendshipData.swift in Sources */,
 				8F66501628D4FCC60096C703 /* ExperienceView.swift in Sources */,
@@ -378,9 +402,9 @@
 				8F7326192694B9F9002DCDA7 /* SV_SavesApp.swift in Sources */,
 				8F5B772626D90CA600B2AA7E /* Game.swift in Sources */,
 				8F34284828D8DAE500C706EB /* InventoryView.swift in Sources */,
-				8F5B771926D814B300B2AA7E /* SettingsKey.swift in Sources */,
 				8F5B772A26D933D000B2AA7E /* GameView.swift in Sources */,
 				8F5B772426D90BBD00B2AA7E /* GameManager.swift in Sources */,
+				8F18569028D9EC8D00E37847 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,10 +562,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "SV Saves/SV Saves.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SV Saves/Preview Content\"";
-				DEVELOPMENT_TEAM = NJ4VVCSZ7F;
+				DEVELOPMENT_TEAM = QV4QS82KBT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "SV Saves/Info.plist";
@@ -557,8 +582,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.esri.hackathon-sdv";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.FreeBits.SV-Saves";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -571,10 +597,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "SV Saves/SV Saves.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SV Saves/Preview Content\"";
-				DEVELOPMENT_TEAM = NJ4VVCSZ7F;
+				DEVELOPMENT_TEAM = QV4QS82KBT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "SV Saves/Info.plist";
@@ -590,8 +617,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.esri.hackathon-sdv";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.FreeBits.SV-Saves";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -13,10 +13,15 @@ struct DirectoryView: View {
     @ObservedObject
     var manager: GameManager
     
-    @ObservedObject var settings: Settings
+    @ObservedObject
+    var settings: Settings
     
-    @State private var showDocumentPicker = false
-    
+    @State
+    private var showDocumentPicker = false
+
+    @State
+    private var showSettings = false
+
     var body: some View {
         
         NavigationStack {
@@ -27,14 +32,23 @@ struct DirectoryView: View {
                             Text("Loading Games")
                         }
                     } else {
-                        List {
-                            ForEach(manager.games) { game in
-                                NavigationLink(destination: GameView(game: game)) {
-                                    GameRowView(game: game)
-                                }
+                        if manager.games.isEmpty {
+                            Text("No games found in current folder. Choose a different folder to check")
+                                .padding()
+                                .multilineTextAlignment(.center)
+                            Button("Choose Stardew Valley Folder") {
+                                showDocumentPicker = true
                             }
-                        }.refreshable {
-                            manager.refresh()
+                        } else {
+                            List {
+                                ForEach(manager.games) { game in
+                                    NavigationLink(destination: GameView(game: game, settings: settings)) {
+                                        GameRowView(game: game)
+                                    }
+                                }
+                            }.refreshable {
+                                manager.refresh()
+                            }
                         }
                     }
                 }
@@ -60,9 +74,18 @@ struct DirectoryView: View {
                     }) {
                         Image(systemName: "folder.badge.plus")
                     }
-
-
                 }
+
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    Button(action: {
+                        showSettings = true
+                    }) {
+                        Image(systemName: "gearshape")
+                    }
+                }
+            }
+            .sheet(isPresented: $showSettings) {
+                SettingsView(gameManager: manager, settings: settings)
             }
             
         }

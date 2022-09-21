@@ -8,7 +8,7 @@
 import Foundation
 extension FileManager {
     var containerUrl: URL? {
-        return url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Backup Games")
+        return url(forUbiquityContainerIdentifier: nil)
     }
 
     func createBackupFolderIfNeeded() {
@@ -22,5 +22,10 @@ extension FileManager {
             }
         }
     }
+
+    public var documentsDirectory: URL {
+        try! url(for: FileManager.SearchPathDirectory.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+    }
+
 }
 

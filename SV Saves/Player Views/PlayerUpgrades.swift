@@ -19,7 +19,9 @@ struct PlayerUpgrades: View {
         List {
             Picker("Backpack Size", selection: $player.maxItems) {
                 ForEach([12, 24, 36], id: \.self) {
-                    Text("\($0)").tag($0)
+                    Text("\($0)")
+                        .padding()
+                        .tag($0)
                 }
             }
             HStack {
