@@ -9,8 +9,14 @@ import SwiftUI
 
 @main
 struct SV_SavesApp: App {
-    
+
+    let viewModel: RootViewModel
+
+    init() {
+        viewModel = RootViewModel()
+    }
+
     var body: some Scene {
-        RootScene()
+        RootScene(rootViewModel: viewModel)
     }
 }

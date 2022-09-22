@@ -15,8 +15,11 @@
 		8F1A4D8528DBD38E00BF1532 /* BackupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A4D8428DBD38E00BF1532 /* BackupView.swift */; };
 		8F2F5E2D28C8FE6700C7D749 /* SDGParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8F2F5E2C28C8FE6700C7D749 /* SDGParser */; };
 		8F2F5E3028C9072500C7D749 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2F5E2F28C9072500C7D749 /* Player.swift */; };
+		8F2F703C28DCD7D300678F1B /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2F703B28DCD7D300678F1B /* HelpView.swift */; };
 		8F34284828D8DAE500C706EB /* InventoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F34284728D8DAE500C706EB /* InventoryView.swift */; };
 		8F34284A28D8DD7900C706EB /* Inventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F34284928D8DD7900C706EB /* Inventory.swift */; };
+		8F442D6428DCC01E0048266A /* GameBackupSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F442D6328DCC01E0048266A /* GameBackupSectionView.swift */; };
+		8F442D6628DCC7EB0048266A /* RootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F442D6528DCC7EB0048266A /* RootViewModel.swift */; };
 		8F5B771426D8124100B2AA7E /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B771326D8124100B2AA7E /* Settings.swift */; };
 		8F5B771726D812BC00B2AA7E /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B771626D812BC00B2AA7E /* Setting.swift */; };
 		8F5B772226D90B4100B2AA7E /* DirectoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5B772126D90B4100B2AA7E /* DirectoryView.swift */; };
@@ -67,8 +70,11 @@
 		8F1A4D8428DBD38E00BF1532 /* BackupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupView.swift; sourceTree = "<group>"; };
 		8F2F5E2A28C8FE5D00C7D749 /* SDGParser */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SDGParser; sourceTree = "<group>"; };
 		8F2F5E2F28C9072500C7D749 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		8F2F703B28DCD7D300678F1B /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		8F34284728D8DAE500C706EB /* InventoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryView.swift; sourceTree = "<group>"; };
 		8F34284928D8DD7900C706EB /* Inventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inventory.swift; sourceTree = "<group>"; };
+		8F442D6328DCC01E0048266A /* GameBackupSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBackupSectionView.swift; sourceTree = "<group>"; };
+		8F442D6528DCC7EB0048266A /* RootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewModel.swift; sourceTree = "<group>"; };
 		8F5B771326D8124100B2AA7E /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		8F5B771626D812BC00B2AA7E /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		8F5B772126D90B4100B2AA7E /* DirectoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryView.swift; sourceTree = "<group>"; };
@@ -206,12 +212,15 @@
 				8F5B772326D90BBD00B2AA7E /* GameManager.swift */,
 				8F2F5E2E28C9061F00C7D749 /* Data */,
 				8F5D8FE626D7E2A300E0FA08 /* RootScene.swift */,
+				8F442D6528DCC7EB0048266A /* RootViewModel.swift */,
 				8F5D8FE826D7E38000E0FA08 /* IntroView.swift */,
 				8F5B772126D90B4100B2AA7E /* DirectoryView.swift */,
 				8F18568A28D9DAE100E37847 /* SettingsView.swift */,
 				8F5B772726D9333400B2AA7E /* GameRowView.swift */,
 				8F5B772926D933D000B2AA7E /* GameView.swift */,
+				8F442D6328DCC01E0048266A /* GameBackupSectionView.swift */,
 				8F1A4D8428DBD38E00BF1532 /* BackupView.swift */,
+				8F2F703B28DCD7D300678F1B /* HelpView.swift */,
 				8F66501028D4F5020096C703 /* Player Views */,
 				8F667EF228CB7EB100696790 /* Filemanager+Extensions.swift */,
 				8F18568E28D9EC8400E37847 /* Logging */,
@@ -388,12 +397,14 @@
 				8F5B771426D8124100B2AA7E /* Settings.swift in Sources */,
 				8F5D8FE726D7E2A300E0FA08 /* RootScene.swift in Sources */,
 				8F18569228D9ECD200E37847 /* LogSystem.swift in Sources */,
+				8F442D6428DCC01E0048266A /* GameBackupSectionView.swift in Sources */,
 				8F66501228D4F5160096C703 /* PlayerUpgrades.swift in Sources */,
 				8F5B772826D9333400B2AA7E /* GameRowView.swift in Sources */,
 				8F66500D28D4EBCD0096C703 /* PersonForm.swift in Sources */,
 				8F18569428DA00E300E37847 /* Backup.swift in Sources */,
 				8F2F5E3028C9072500C7D749 /* Player.swift in Sources */,
 				8F66500B28D4C7A90096C703 /* FriendshipData.swift in Sources */,
+				8F2F703C28DCD7D300678F1B /* HelpView.swift in Sources */,
 				8F66501628D4FCC60096C703 /* ExperienceView.swift in Sources */,
 				8F5D8FE926D7E38000E0FA08 /* IntroView.swift in Sources */,
 				8F66500928D4C7140096C703 /* FriendshipView.swift in Sources */,
@@ -402,6 +413,7 @@
 				8F667EF328CB7EB100696790 /* Filemanager+Extensions.swift in Sources */,
 				8F66501428D4FBB90096C703 /* ExperiencePoints.swift in Sources */,
 				8F66500F28D4ECB60096C703 /* AttackViews.swift in Sources */,
+				8F442D6628DCC7EB0048266A /* RootViewModel.swift in Sources */,
 				8F7326192694B9F9002DCDA7 /* SV_SavesApp.swift in Sources */,
 				8F5B772626D90CA600B2AA7E /* Game.swift in Sources */,
 				8F34284828D8DAE500C706EB /* InventoryView.swift in Sources */,
@@ -568,7 +580,7 @@
 				CODE_SIGN_ENTITLEMENTS = "SV Saves/SV Saves.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"SV Saves/Preview Content\"";
 				DEVELOPMENT_TEAM = QV4QS82KBT;
 				ENABLE_PREVIEWS = YES;
@@ -585,7 +597,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 22.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.FreeBits.SV-Saves";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -603,7 +615,7 @@
 				CODE_SIGN_ENTITLEMENTS = "SV Saves/SV Saves.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"SV Saves/Preview Content\"";
 				DEVELOPMENT_TEAM = QV4QS82KBT;
 				ENABLE_PREVIEWS = YES;
@@ -620,7 +632,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 22.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.FreeBits.SV-Saves";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

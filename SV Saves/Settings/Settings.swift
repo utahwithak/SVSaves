@@ -20,4 +20,6 @@ class Settings: ObservableObject {
     @Published(wrappedValue: false, key: .backupToiCloud)
     public var shouldBackupToiCloud: Bool
 
+    @Published(wrappedValue: false, key: .hasSeenHelp)
+    public var hasSeenHelp: Bool
 }

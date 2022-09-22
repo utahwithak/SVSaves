@@ -14,14 +14,24 @@ struct FriendshipView: View {
 
     var body: some View {
 
-        Form {
-            ForEach(data.friendships) { item in
+        NavigationStack {
+            List(data.friendships) { item in
                 Section(item.friendName) {
                     PointsRow(friendship: item)
                     GiftsRow(friendship: item)
                 }
-
             }
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") {
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                                        to: nil, from: nil, for: nil)
+                    }
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Friendship")
 
         }
 

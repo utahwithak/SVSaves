@@ -22,6 +22,14 @@ struct DirectoryView: View {
     @State
     private var showSettings = false
 
+    @State var showHelp: Bool = false
+
+    init(manager: GameManager, settings: Settings) {
+        self.manager = manager
+        self.settings = settings
+
+    }
+
     var body: some View {
         
         NavigationStack {
@@ -34,6 +42,9 @@ struct DirectoryView: View {
                     } else {
                         if manager.games.isEmpty {
                             Text("No games found in current folder. Choose a different folder to check")
+                                .padding()
+                                .multilineTextAlignment(.center)
+                            Text("Look for a Stardew Valley folder stored on the device. Open that folder and press Done ")
                                 .padding()
                                 .multilineTextAlignment(.center)
                             Button("Choose Stardew Valley Folder") {
@@ -56,6 +67,10 @@ struct DirectoryView: View {
                     Button("Choose Stardew Valley Folder") {
                         showDocumentPicker = true
                     }
+                }
+            }.onAppear {
+                if !settings.hasSeenHelp {
+                    showHelp = true
                 }
             }
             .fileImporter(isPresented: $showDocumentPicker, allowedContentTypes: [.folder], onCompletion: { result in
@@ -82,10 +97,18 @@ struct DirectoryView: View {
                     }) {
                         Image(systemName: "gearshape")
                     }
+                    Button(action: {
+                        showHelp = true
+                    }) {
+                        Image(systemName: "questionmark.circle")
+                    }
                 }
             }
             .sheet(isPresented: $showSettings) {
                 SettingsView(gameManager: manager, settings: settings)
+            }
+            .sheet(isPresented: $showHelp) {
+                HelpView(settings: settings)
             }
             
         }

@@ -16,13 +16,13 @@ struct GameRowView: View {
     
     var body: some View {
         VStack {
-                HStack {
-                    Text(game.player.farmName)
-                    if !game.player.name.isEmpty {
-                        Text(" - ")
-                        Text(game.player.name)
-                    }
-                }                
+            HStack {
+                Text(game.player.farmName)
+                if !game.player.name.isEmpty {
+                    Text(" - ")
+                    Text(game.player.name)
+                }
+            }
 
         }
         

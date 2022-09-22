@@ -13,6 +13,7 @@ enum Setting: String {
     case stardewValleyFolderLocation
     case alwaysBackupOnSave
     case backupToiCloud
+    case hasSeenHelp
 
     fileprivate static var cancellables = [Setting : AnyCancellable]()
 

@@ -18,7 +18,7 @@ class ExperiencePoints: ObservableObject {
     @Published
     var isDirty: Bool = false
 
-    init( experiencePoints: SDGParser.ExperiencePoints) {
+    init(experiencePoints: SDGParser.ExperiencePoints) {
         self.experiencePoints = experiencePoints
         farmingExperience = experiencePoints.farmingExperience
         miningExperience = experiencePoints.miningExperience

@@ -13,6 +13,10 @@ struct BackupView: View {
     @Environment(\.presentationMode)
     var presentationMode: Binding<PresentationMode>
 
+
+    @State
+    var promptForRestoreFile: Bool = false
+
     @ObservedObject
     var game: Game
 
@@ -21,6 +25,9 @@ struct BackupView: View {
     var hasBoth: Bool {
         backups.contains { $0.isLocal } && backups.contains { !$0.isLocal }
     }
+
+    @State
+    var currentBackup: Backup?
 
     enum FilterType: Int {
         case local
@@ -46,6 +53,13 @@ struct BackupView: View {
     }
 
     var body: some View {
+        let hasBackup = Binding<Bool>(
+            get: {
+            currentBackup != nil
+        }, set: { _ in
+            currentBackup = nil
+        })
+
         NavigationStack {
             VStack {
                 if hasBoth {
@@ -55,16 +69,26 @@ struct BackupView: View {
                         Text("iCloud").tag(FilterType.iCloud)
                     }
                     .pickerStyle(.segmented)
+                    .padding([.leading, .trailing, .top])
 
                 }
                 List(filteredBackups) { backup in
                     Button {
-                        restoreGame(from: backup)
+                       currentBackup = backup
                     } label: {
                         Label(backup.name, systemImage: backup.isLocal ? "folder" : "icloud" )
                     }
                 }
             }
+            .alert(Text("Are you sure you want to restore file?"), isPresented: hasBackup, presenting: currentBackup, actions: { backup in
+                Button("Cancel", role: .cancel) { }
+
+                Button("Restore", role: .destructive) {
+                    restoreGame(from: backup)
+                }
+            }, message: { _ in
+                Text("Current save file will be overwritten, this cannot be undone.")
+            })
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Backups")
             .toolbar {

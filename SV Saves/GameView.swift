@@ -25,16 +25,8 @@ struct GameView: View {
     var presentationMode: Binding<PresentationMode>
 
     @State
-    var promptForRestoreOldFile: Bool = false
-
-    @State
-    var promptForRestoreFromBackup: Bool = false
-
-    @State
     var promptForSaveBackup: Bool = false
 
-    @State
-    var showBackups: Bool = false
 
     var body: some View {
 
@@ -144,41 +136,14 @@ struct GameView: View {
                     Text(game.accessor.gameVersion)
                 }
 
-                if game.canBackupToiCloud {
-                    Button {
-                        game.backupGame(to: .iCloud)
-                    } label: {
-                        Text("Backup Game to iCloud")
-                    }
-                    Button {
-                        game.backupGame(to: .local)
-                    } label: {
-                        Text("Backup Game Locally")
-                    }
-                } else {
-                    Button {
-                        game.backupGame(to: .default)
-                    } label: {
-                        Text("Backup Game")
-                    }
-                }
-
-                Button {
-                    promptForRestoreOldFile = true
-                } label: {
-                    Text("Restore from _old file")
-                        .foregroundColor(.red)
-                }
-
-                if !game.backups.isEmpty {
-                    Button {
-                        showBackups = true
-                    } label: {
-                        Text("Restore from Backups")
-                    }
-                }
             } header: {
                 Text("Misc")
+            }
+
+            Section {
+                GameBackupSectionView(game: game)
+            } header: {
+                Text("Backup")
             }
         }
         .navigationTitle($game.player.farmName)
@@ -227,14 +192,6 @@ struct GameView: View {
 
 
         }
-        .alert("Are you sure you want to restore from the _old file?", isPresented: $promptForRestoreOldFile) {
-            Button("Cancel", role: .cancel) { }
-
-            Button("Restore", role: .destructive) {
-                game.restoreOldFile()
-            }
-
-        }
         .alert("Create backup before saving?", isPresented: $promptForSaveBackup) {
             Button("Backup") {
                 game.backupGame()
@@ -249,10 +206,6 @@ struct GameView: View {
             Button("Just Save", role: .destructive) {
                 saveGame()
             }
-
-        }
-        .sheet(isPresented: $showBackups) {
-            BackupView(game: game)
 
         }
 

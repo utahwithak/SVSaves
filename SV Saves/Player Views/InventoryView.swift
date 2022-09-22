@@ -16,12 +16,31 @@ struct InventoryView: View {
     }
 
     var body: some View {
-        Form {
-            ForEach(inventory.items) { item in
-                ItemRow(item: item)
-            }
+        VStack {
+            Text("Rows with numbers allows editing the stack count")
+                .multilineTextAlignment(.center)
+                .font(.subheadline)
+                .padding([.leading, .trailing, .top])
+            List {
+                ForEach(inventory.items.filter { !$0.isEmpty }) { item in
+                    ItemRow(item: item)
+                }
 
+            }
         }
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+
+                Button("Done") {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                                    to: nil, from: nil, for: nil)
+                }
+            }
+        }
+        
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Inventory")
     }
 }
 

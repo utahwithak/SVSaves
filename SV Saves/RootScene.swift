@@ -11,14 +11,15 @@ import SwiftUI
 struct RootScene: Scene {
 
     @ObservedObject
-    var settings = Settings()
-    
+    var rootViewModel: RootViewModel
+
+
     var body: some Scene {
         WindowGroup {
-            if let manager = GameManager(settings: settings) {
-                DirectoryView(manager: manager, settings: settings)
+            if let manager = rootViewModel.manager {
+                DirectoryView(manager: manager, settings: rootViewModel.settings)
             } else {
-                IntroView(settings: settings)
+                IntroView(settings: rootViewModel.settings)
             }
         }
     }

@@ -40,7 +40,7 @@ struct PlayerUpgrades: View {
 
             HStack {
                 Text("House Upgrade Level")
-                TextField("", value: $player.houseUpgradeLevel, format: .number)
+                TextField("", value: $player.houseUpgradeLevel, formatter: BoundFormatter(min: 0, max: 2))
                     .keyboardType(.numberPad)
                     .multilineTextAlignment(.trailing)
             }
@@ -59,7 +59,12 @@ struct PlayerUpgrades: View {
                     .multilineTextAlignment(.trailing)
             }
 
-
+            HStack {
+                Text("Club Coins")
+                TextField("", value: $player.clubCoins, format: .number)
+                    .keyboardType(.numberPad)
+                    .multilineTextAlignment(.trailing)
+            }
 
         }.onTapGesture {
 

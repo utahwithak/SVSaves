@@ -33,7 +33,7 @@ struct IntroView: View {
                 .multilineTextAlignment(.center)
                 .padding()
 
-            Button("Choose Stardew Valley Folder") {
+            Button("Choose 'Stardew Valley' Folder") {
                 showDocumentPicker = true
             }
         }

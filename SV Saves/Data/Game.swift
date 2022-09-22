@@ -190,6 +190,7 @@ class Game : ObservableObject, Identifiable {
 
     func reload() async throws {
         self.accessor = try await Parser.parse(game: gamePath)
+        isDirty = false
     }
 
     func saveGame() throws {
