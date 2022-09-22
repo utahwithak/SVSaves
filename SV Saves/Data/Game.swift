@@ -12,6 +12,8 @@ import SwiftyXMLParser
 
 protocol GameDelegate: AnyObject {
     func backupGame(_ game: Game)
+    func backupGameToCloud(_ game: Game)
+    func backupGameLocally(_ game: Game)
     func backups(for game: Game) -> [Backup]
 }
 
@@ -24,11 +26,14 @@ class Game : ObservableObject, Identifiable {
 
     @Published
     var player: Player
-    
+
     let path: URL
 
     @Published
     var isReloading = false
+
+    @Published
+    var isDirty: Bool = false
 
     @Published
     public private(set) var backups = [Backup]()
@@ -90,6 +95,10 @@ class Game : ObservableObject, Identifiable {
     private var gameSubscription: AnyCancellable!
 
     private var subscriptions = Set<AnyCancellable>()
+
+    private var dirtySubscription: AnyCancellable?
+
+    private var playerDirtySubscription: AnyCancellable?
     
     init(path: URL, delegate: GameDelegate) async throws {
         self.delegate = delegate
@@ -128,10 +137,16 @@ class Game : ObservableObject, Identifiable {
             self?.reloadFile()
         }
 
+        playerDirtySubscription = $player.sink { [weak self] newPlayer in
+            self?.observedPlayer(newPlayer)
+        }
+
         reloadFile()
+
         Task {
             checkForBackup()
         }
+
     }
 
     private func reloadFile() {
@@ -151,51 +166,68 @@ class Game : ObservableObject, Identifiable {
         shouldSpawnMonsters = accessor.shouldSpawnMonsters
 
         subscriptions.removeAll(keepingCapacity: true)
-        $chanceToRainTomorrow.assign(to: \.chanceToRainTomorrow, on: accessor).store(in: &subscriptions)
-        $farmType.assign(to: \.farmType, on: accessor).store(in: &subscriptions)
-        $season.assign(to: \.currentSeason, on: accessor).store(in: &subscriptions)
-        $dayOfMonth.assign(to: \.dayOfMonth, on: accessor).store(in: &subscriptions)
-        $year.assign(to: \.currentYear, on: accessor).store(in: &subscriptions)
 
-        $samBandName.assign(to: \.samBandName, on: accessor).store(in: &subscriptions)
-        $elliottBookName.assign(to: \.elliottBookName, on: accessor).store(in: &subscriptions)
-        $dailyLuck.assign(to: \.dailyLuck, on: accessor).store(in: &subscriptions)
-        $isRaining.assign(to: \.isRaining, on: accessor).store(in: &subscriptions)
-        $shippingTax.assign(to: \.shippingTax, on: accessor).store(in: &subscriptions)
-        $bloomDay.assign(to: \.bloomDay, on: accessor).store(in: &subscriptions)
-        $isLightning.assign(to: \.isLightning, on: accessor).store(in: &subscriptions)
-        $isSnowing.assign(to: \.isSnowing, on: accessor).store(in: &subscriptions)
-        $shouldSpawnMonsters.assign(to: \.shouldSpawnMonsters, on: accessor).store(in: &subscriptions)
+        $chanceToRainTomorrow.assign(to: \.chanceToRainTomorrow, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $farmType.assign(to: \.farmType, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $season.assign(to: \.currentSeason, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $dayOfMonth.assign(to: \.dayOfMonth, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $year.assign(to: \.currentYear, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $samBandName.assign(to: \.samBandName, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $elliottBookName.assign(to: \.elliottBookName, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $dailyLuck.assign(to: \.dailyLuck, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $isRaining.assign(to: \.isRaining, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $shippingTax.assign(to: \.shippingTax, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $bloomDay.assign(to: \.bloomDay, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $isLightning.assign(to: \.isLightning, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $isSnowing.assign(to: \.isSnowing, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $shouldSpawnMonsters.assign(to: \.shouldSpawnMonsters, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        isDirty = false
+    }
 
+    func observedPlayer(_ player: Player) {
+        player.$isDirty.assign(to: &$isDirty)
     }
 
     func reload() async throws {
         self.accessor = try await Parser.parse(game: gamePath)
-
     }
 
     func saveGame() throws {
+
         let document = try accessor.makeDocument()
         let data = document.data(using: .utf8)
         try data?.write(to: gamePath)
-
+        isDirty = false
     }
     
     func load() async {
         do {
             accessor = try await Parser.parse(game: gamePath)
         } catch {
-            print("Failed:\(error)")
+            Log.error("load failed:\(error)")
         }
     }
 
 
     func checkForBackup() {
         self.backups = delegate?.backups(for: self) ?? []
+
     }
 
-    func backupGame() {
-        delegate?.backupGame(self)
+    enum BackupLocation {
+        case `default`
+        case iCloud
+        case local
+    }
+    func backupGame(to location: BackupLocation = .default) {
+        switch location {
+        case .default:
+            delegate?.backupGame(self)
+        case .local:
+            delegate?.backupGameLocally(self)
+        case .iCloud:
+            delegate?.backupGameToCloud(self)
+        }
         checkForBackup()
     }
 
@@ -240,5 +272,15 @@ class Game : ObservableObject, Identifiable {
             }
             self.isReloading = false
         }
+    }
+}
+
+extension Publisher where Self.Failure == Never {
+
+    public func assign<Root>(to keyPath: ReferenceWritableKeyPath<Root, Self.Output>, on object: Root, markDirty: inout Published<Bool>.Publisher, storeIn set: inout Set<AnyCancellable>) {
+        self.assign(to: keyPath, on: object)
+        .store(in: &set)
+
+        self.map { _ in true }.assign(to: &markDirty)
     }
 }

@@ -12,9 +12,17 @@ import SDGParser
 class FriendshipData: ObservableObject {
     let accessor: SDGParser.FriendshipData
 
+    var subscriptions = Set<AnyCancellable>()
+    @Published
+    var isDirty: Bool = false
+
     init(accessor: SDGParser.FriendshipData) {
         self.accessor = accessor
         friendships = accessor.friendshipItems.map { Friendship(item: $0)}
+
+        for friendship in friendships {
+            friendship.$isDirty.assign(to: &$isDirty)
+        }
     }
 
     let friendships: [Friendship]
@@ -38,6 +46,9 @@ class Friendship: ObservableObject, Identifiable {
     var giftsThisWeek: Int
 
     private var subscriptions = Set<AnyCancellable>()
+
+    @Published
+    var isDirty: Bool = false
 
     init(item: FriendshipItem) {
         self.item = item

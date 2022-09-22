@@ -24,7 +24,10 @@ struct Backup: Identifiable {
 
     let url: URL
 
-    init?(url: URL) {
+    let isLocal: Bool
+
+    init?(url: URL, isLocal: Bool) {
+        self.isLocal = isLocal
         self.url = url
         let dateString = url.lastPathComponent
         guard let date = GameManager.dateFormatter.date(from: dateString) else {

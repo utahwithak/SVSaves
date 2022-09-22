@@ -11,15 +11,21 @@ import Combine
 
 @MainActor
 class GameManager : ObservableObject {
-    
-    private var urlPublisher: AnyPublisher<URL?, Never>
-    private var subscription: AnyCancellable?
+
+    private var subscriptions = Set<AnyCancellable>()
     
     @Published
     var canAccessUrl = false
 
     @Published
-    private var currentURL: URL?
+    private var currentURL: URL? {
+        willSet {
+            currentURL?.stopAccessingSecurityScopedResource()
+        }
+        didSet {
+            canAccessUrl = currentURL?.startAccessingSecurityScopedResource() ?? false
+        }
+    }
 
     @Published
     var isLoading = false
@@ -47,29 +53,28 @@ class GameManager : ObservableObject {
         }
 
         self.settings = settings
-
-
-        self.currentURL = url
-        self.urlPublisher = settings.$stardewValleyFolderLocation.eraseToAnyPublisher()
-        
-        self.canAccessUrl = true
         self.games = []
-        
-        self.urlPublisher.assign(to: &$currentURL)
+        self.currentURL = url
 
-        subscription = $currentURL.sink { [weak self] url in
-            self?.refresh(with: url)
+        canAccessUrl = url.startAccessingSecurityScopedResource()
+
+        guard canAccessUrl else {
+            return nil
         }
 
-        Log.info("SV folder: \(url)")
+        settings.$stardewValleyFolderLocation.assign(to: &$currentURL)
 
+        $currentURL
+            .receive(on: RunLoop.main)
+            .sink { [weak self] url in
+                self?.refresh()
+            }.store(in: &subscriptions)
+
+        Log.info("SV folder: \(url)")
         Log.info("Local Backup folder: \(localBackupDirectory)")
         Log.info("Cloud Backup folder: \(String(describing: cloudBackupDirectory))")
     }
-    
-    deinit {
-    }
-    
+
     @Published
     var games: [Game] {
         willSet {
@@ -80,64 +85,58 @@ class GameManager : ObservableObject {
     @Published
     var hasGames = false
     
-    func refresh(with newSetting: URL? = nil) {
-        guard let url = newSetting ?? currentURL else {
+    func refresh() {
+        guard let currentURL else {
             canAccessUrl = false
             return
         }
         
-        canAccessUrl = url.startAccessingSecurityScopedResource()
         games.removeAll()
-        if canAccessUrl {
-            
-            if let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys:[ .isDirectoryKey], options: [.skipsSubdirectoryDescendants]) {
+        guard canAccessUrl else {
+            return
+        }
 
-                Task {
-                    self.isLoading = true
-                    let games = await withTaskGroup(of: Game?.self, returning: [Game].self) { group in
+        if let enumerator = FileManager.default.enumerator(at: currentURL, includingPropertiesForKeys: [.isDirectoryKey], options: [.skipsSubdirectoryDescendants]) {
 
-                        var games = [Game?]()
+            Task {
+                self.isLoading = true
+                let games = await withTaskGroup(of: Game?.self, returning: [Game].self) { group in
 
-                        for case let fileURL as URL in enumerator {
-                            print("checking:\(fileURL.lastPathComponent)")
-                            guard let resourceValues = try? fileURL.resourceValues(forKeys: [.isDirectoryKey]),
-                                  let isDirectory = resourceValues.isDirectory
-                            else {
-                                continue
-                            }
+                    var games = [Game?]()
 
+                    for case let fileURL as URL in enumerator {
+                        Log.debug("checking:\(fileURL.lastPathComponent)")
+                        guard let resourceValues = try? fileURL.resourceValues(forKeys: [.isDirectoryKey]), resourceValues.isDirectory == true else {
+                            continue
+                        }
 
-                            if isDirectory && isGame(parentDir: fileURL) {
-                                group.addTask {
-                                    do {
-                                        return try await Game(path: fileURL, delegate: self)
-                                    } catch {
-                                        Log.error("Failed to load game:\(fileURL.lastPathComponent), error:\(error)")
-                                        return nil
+                        if isGame(parentDir: fileURL) {
+                            group.addTask {
+                                do {
+                                    return try await Game(path: fileURL, delegate: self)
+                                } catch {
+                                    Log.error("Failed to load game:\(fileURL.lastPathComponent), error:\(error)")
+                                    return nil
 
-                                    }
                                 }
-
-                            } else {
-                                print("No game found at:\(fileURL.lastPathComponent)")
                             }
 
+                        } else {
+                            print("No game found at:\(fileURL.lastPathComponent)")
                         }
 
-                        for await result in group {
-                            games.append(result)
-                        }
-                        return games.compactMap({ $0 }).sorted { lhs, rhs in
-                            lhs.player.farmName < rhs.player.farmName
-                        }
                     }
-                    self.isLoading = false
 
-                    self.games = games
-
-                    url.stopAccessingSecurityScopedResource()
+                    for await result in group {
+                        games.append(result)
+                    }
+                    return games.compactMap({ $0 }).sorted { lhs, rhs in
+                        lhs.player.farmName < rhs.player.farmName
+                    }
                 }
+                self.isLoading = false
 
+                self.games = games
             }
         }
     }
@@ -221,18 +220,29 @@ class GameManager : ObservableObject {
 
 extension GameManager: GameDelegate {
     func backups(for game: Game) -> [Backup] {
-        if settings.shouldBackupToiCloud {
-            guard let cloudBackupDirectory else {
-                Log.error("Cloud backup directory not available")
-                return []
-            }
-            return backups(for: game, in: cloudBackupDirectory)
-        } else {
-            return backups(for: game, in: localBackupDirectory)
+        var localBackups = backups(for: game, in: localBackupDirectory, isLocal: true)
+        if let cloudBackupDirectory {
+            localBackups.append(contentsOf: backups(for: game, in: cloudBackupDirectory, isLocal: false))
         }
+        return localBackups.sorted { lhs, rhs in
+            lhs.date > rhs.date
+        }
+
     }
 
-    func backups(for game: Game, in root: URL) -> [Backup] {
+    func backupGameLocally(_ game: Game) {
+        backupGame(game, to: localBackupDirectory)
+    }
+
+    func backupGameToCloud(_ game: Game) {
+        guard let cloudBackupDirectory else {
+            Log.error("Cloud backup directory not available")
+            return
+        }
+        backupGame(game, to: cloudBackupDirectory)
+    }
+
+    func backups(for game: Game, in root: URL, isLocal: Bool) -> [Backup] {
         let gameName = game.path.lastPathComponent
         // create backup folder for this game
         let gameBackupFolder = root.appending(component: gameName)
@@ -243,7 +253,7 @@ extension GameManager: GameDelegate {
 
         do {
             let paths =  try FileManager.default.contentsOfDirectory(at: gameBackupFolder, includingPropertiesForKeys: nil)
-            return paths.compactMap { Backup(url: $0) }.sorted(by: { $0.date > $1.date })
+            return paths.compactMap { Backup(url: $0, isLocal: isLocal) }.sorted(by: { $0.date > $1.date })
         } catch {
             Log.error("Failed to get contents of directory: \(error)")
             return []

@@ -58,29 +58,34 @@ struct GameView: View {
                     TextField("year", value: $game.year, format: .number)
                         .keyboardType(.numberPad)
                         .multilineTextAlignment(.trailing)
+
                 }
                 HStack {
                     Text("Day of Month")
                     TextField("day", value: $game.dayOfMonth, format: .number)
                         .keyboardType(.numberPad)
                         .multilineTextAlignment(.trailing)
+
                 }
 
                 HStack {
                     Text("Sam's Band Name")
                     TextField("name", text: $game.samBandName)
                         .multilineTextAlignment(.trailing)
+
                 }
                 HStack {
                     Text("Elliot's Book Name")
                     TextField("name", text: $game.elliottBookName)
                         .multilineTextAlignment(.trailing)
+
                 }
                 HStack {
                     Text("Daily Luck")
                     TextField("luck value", value: $game.dailyLuck, format:.number)
                         .multilineTextAlignment(.trailing)
                         .keyboardType(.decimalPad)
+                    
                 }
 
                 Toggle(isOn: $game.shippingTax) {
@@ -116,6 +121,7 @@ struct GameView: View {
                     TextField("Value", value: $game.chanceToRainTomorrow, format:.number)
                         .multilineTextAlignment(.trailing)
                         .keyboardType(.decimalPad)
+
                 }
             } header: {
                 Text("Weather")
@@ -138,12 +144,21 @@ struct GameView: View {
                     Text(game.accessor.gameVersion)
                 }
 
-                Button {
-                    game.backupGame()
-                } label: {
-                    if game.canBackupToiCloud {
+                if game.canBackupToiCloud {
+                    Button {
+                        game.backupGame(to: .iCloud)
+                    } label: {
                         Text("Backup Game to iCloud")
-                    } else {
+                    }
+                    Button {
+                        game.backupGame(to: .local)
+                    } label: {
+                        Text("Backup Game Locally")
+                    }
+                } else {
+                    Button {
+                        game.backupGame(to: .default)
+                    } label: {
                         Text("Backup Game")
                     }
                 }
@@ -169,9 +184,28 @@ struct GameView: View {
         .navigationTitle($game.player.farmName)
         .navigationBarBackButtonHidden(true)
         .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+
+                Button("Done") {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                                    to: nil, from: nil, for: nil)
+                }
+            }
+        }
+        .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: discardEdits){
-                    Text("Cancel")
+
+                if game.isDirty {
+                    Button(action: discardEdits){
+                        Text("Cancel")
+                    }
+                } else {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Done")
+                    }
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -181,10 +215,12 @@ struct GameView: View {
                     } label: {
                         Image(systemName: "square.and.arrow.up")
                     }
-                    Button {
-                        checkSave()
-                    } label: {
-                        Text("Save")
+                    if game.isDirty {
+                        Button {
+                            checkSave()
+                        } label: {
+                            Text("Save")
+                        }
                     }
                 }
             }
@@ -216,19 +252,7 @@ struct GameView: View {
 
         }
         .sheet(isPresented: $showBackups) {
-            List(game.backups) { backup in
-                Button {
-                    game.restoreGame(from: backup)
-                    showBackups = false
-                } label: {
-                    Text("\(backup.name)")
-                }
-            }
-            Button {
-                showBackups = false
-            } label: {
-                Text("Cancel")
-            }
+            BackupView(game: game)
 
         }
 
@@ -263,12 +287,12 @@ struct GameView: View {
     private func saveGame() {
         do {
             try game.saveGame()
-            presentationMode.wrappedValue.dismiss()
         } catch {
             print("Failed to save game")
         }
 
-
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                                to: nil, from: nil, for: nil)
     }
 
     private func shareGame() {

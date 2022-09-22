@@ -12,6 +12,7 @@
 		8F18569028D9EC8D00E37847 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F18568F28D9EC8D00E37847 /* Category.swift */; };
 		8F18569228D9ECD200E37847 /* LogSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F18569128D9ECD200E37847 /* LogSystem.swift */; };
 		8F18569428DA00E300E37847 /* Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F18569328DA00E300E37847 /* Backup.swift */; };
+		8F1A4D8528DBD38E00BF1532 /* BackupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A4D8428DBD38E00BF1532 /* BackupView.swift */; };
 		8F2F5E2D28C8FE6700C7D749 /* SDGParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8F2F5E2C28C8FE6700C7D749 /* SDGParser */; };
 		8F2F5E3028C9072500C7D749 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2F5E2F28C9072500C7D749 /* Player.swift */; };
 		8F34284828D8DAE500C706EB /* InventoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F34284728D8DAE500C706EB /* InventoryView.swift */; };
@@ -63,6 +64,7 @@
 		8F18568F28D9EC8D00E37847 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		8F18569128D9ECD200E37847 /* LogSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSystem.swift; sourceTree = "<group>"; };
 		8F18569328DA00E300E37847 /* Backup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Backup.swift; sourceTree = "<group>"; };
+		8F1A4D8428DBD38E00BF1532 /* BackupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupView.swift; sourceTree = "<group>"; };
 		8F2F5E2A28C8FE5D00C7D749 /* SDGParser */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SDGParser; sourceTree = "<group>"; };
 		8F2F5E2F28C9072500C7D749 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		8F34284728D8DAE500C706EB /* InventoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryView.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				8F18568A28D9DAE100E37847 /* SettingsView.swift */,
 				8F5B772726D9333400B2AA7E /* GameRowView.swift */,
 				8F5B772926D933D000B2AA7E /* GameView.swift */,
+				8F1A4D8428DBD38E00BF1532 /* BackupView.swift */,
 				8F66501028D4F5020096C703 /* Player Views */,
 				8F667EF228CB7EB100696790 /* Filemanager+Extensions.swift */,
 				8F18568E28D9EC8400E37847 /* Logging */,
@@ -404,6 +407,7 @@
 				8F34284828D8DAE500C706EB /* InventoryView.swift in Sources */,
 				8F5B772A26D933D000B2AA7E /* GameView.swift in Sources */,
 				8F5B772426D90BBD00B2AA7E /* GameManager.swift in Sources */,
+				8F1A4D8528DBD38E00BF1532 /* BackupView.swift in Sources */,
 				8F18569028D9EC8D00E37847 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

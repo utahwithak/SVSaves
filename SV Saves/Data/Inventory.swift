@@ -16,7 +16,12 @@ class Inventory: ObservableObject {
     init(inventory: SDGParser.Inventory) {
         self.inventory = inventory
         items = inventory.items.map { Item(item: $0) }
+
+        items.forEach({ $0.$isDirty.assign(to: &$isDirty )})
     }
+
+    @Published
+    var isDirty: Bool = false
 
     @Published
     var items: [Item]
@@ -32,6 +37,9 @@ class Item: ObservableObject, Identifiable {
     let isStackable: Bool
 
     @Published
+    var isDirty: Bool = false
+
+    @Published
     var stack: Int
 
     private let item: SDGParser.Item
@@ -45,7 +53,7 @@ class Item: ObservableObject, Identifiable {
         stack = item.stack
         isStackable = item.isStackable
 
-        $stack.assign(to: \.stack, on: item).store(in: &subscriptions)
+        $stack.assign(to: \.stack, on: item, markDirty: &$isDirty, storeIn: &subscriptions)
 
     }
 

@@ -14,6 +14,13 @@ class Player: ObservableObject {
 
     let experiencePoints: ExperiencePoints
 
+    let inventory: Inventory
+
+    let friendshipData: FriendshipData
+
+    @Published
+    var isDirty: Bool = false
+
     @Published
     var name: String
 
@@ -116,18 +123,15 @@ class Player: ObservableObject {
     @Published
     public var newSkillPointsToSpend: Int
 
-    let friendshipData: FriendshipData
-
     private var subscriptions = Set<AnyCancellable>()
 
-    let inventory: Inventory
 
     init(player: SDGParser.Player) {
         self.accessor = player
-        self.inventory = Inventory(inventory: player.inventory)
+        inventory = Inventory(inventory: player.inventory)
         friendshipData = FriendshipData(accessor: player.friendshipData)
         experiencePoints = ExperiencePoints(experiencePoints: player.experiencePoints)
-        
+
         name = accessor.name
         farmName = accessor.farmName
         money = accessor.money
@@ -169,44 +173,49 @@ class Player: ObservableObject {
         addedFishingLevel = accessor.addedFishingLevel
         addedLuckLevel = accessor.addedLuckLevel
 
-        $name.assign(to: \.name, on: accessor).store(in: &subscriptions)
-        $farmName.assign(to: \.farmName, on: accessor).store(in: &subscriptions)
-        $money.assign(to: \.money, on: accessor).store(in: &subscriptions)
-        $favoriteThing.assign(to: \.favoriteThing, on: accessor).store(in: &subscriptions)
-        $catPerson.assign(to: \.catPerson, on: accessor).store(in: &subscriptions)
-        $whichPetBreed.assign(to: \.whichPetBreed, on: accessor).store(in: &subscriptions)
-        $isMale.assign(to: \.isMale, on: accessor).store(in: &subscriptions)
-        $speed.assign(to: \.speed, on: accessor).store(in: &subscriptions)
-        $maxItems.assign(to: \.maxItems, on: accessor).store(in: &subscriptions)
-        $attack.assign(to: \.attack, on: accessor).store(in: &subscriptions)
-        $immunity.assign(to: \.immunity, on: accessor).store(in: &subscriptions)
-        $attackIncreaseModifier.assign(to: \.attackIncreaseModifier, on: accessor).store(in: &subscriptions)
-        $knockbackModifier.assign(to: \.knockbackModifier, on: accessor).store(in: &subscriptions)
-        $weaponSpeedModifier.assign(to: \.weaponSpeedModifier, on: accessor).store(in: &subscriptions)
-        $critChanceModifier.assign(to: \.critChanceModifier, on: accessor).store(in: &subscriptions)
-        $critPowerModifier.assign(to: \.critPowerModifier, on: accessor).store(in: &subscriptions)
-        $trashCanLevel.assign(to: \.trashCanLevel, on: accessor).store(in: &subscriptions)
-        $houseUpgradeLevel.assign(to: \.houseUpgradeLevel, on: accessor).store(in: &subscriptions)
-        $daysUntilHouseUpgrade.assign(to: \.daysUntilHouseUpgrade, on: accessor).store(in: &subscriptions)
-        $magneticRadius.assign(to: \.magneticRadius, on: accessor).store(in: &subscriptions)
-        $stamina.assign(to: \.stamina, on: accessor).store(in: &subscriptions)
-        $maxStamina.assign(to: \.maxStamina, on: accessor).store(in: &subscriptions)
-        $maxHealth.assign(to: \.maxHealth, on: accessor).store(in: &subscriptions)
-        $health.assign(to: \.health, on: accessor).store(in: &subscriptions)
-        $daysLeftForToolUpgrade.assign(to: \.daysLeftForToolUpgrade, on: accessor).store(in: &subscriptions)
-        $farmingLevel.assign(to: \.farmingLevel, on: accessor).store(in: &subscriptions)
-        $miningLevel.assign(to: \.miningLevel, on: accessor).store(in: &subscriptions)
-        $combatLevel.assign(to: \.combatLevel, on: accessor).store(in: &subscriptions)
-        $foragingLevel.assign(to: \.foragingLevel, on: accessor).store(in: &subscriptions)
-        $fishingLevel.assign(to: \.fishingLevel, on: accessor).store(in: &subscriptions)
-        $luckLevel.assign(to: \.luckLevel, on: accessor).store(in: &subscriptions)
-        $addedFarmingLevel.assign(to: \.addedFarmingLevel, on: accessor).store(in: &subscriptions)
-        $addedMiningLevel.assign(to: \.addedMiningLevel, on: accessor).store(in: &subscriptions)
-        $addedCombatLevel.assign(to: \.addedCombatLevel, on: accessor).store(in: &subscriptions)
-        $addedForagingLevel.assign(to: \.addedForagingLevel, on: accessor).store(in: &subscriptions)
-        $addedFishingLevel.assign(to: \.addedFishingLevel, on: accessor).store(in: &subscriptions)
-        $addedLuckLevel.assign(to: \.addedLuckLevel, on: accessor).store(in: &subscriptions)
-        $newSkillPointsToSpend.assign(to: \.newSkillPointsToSpend, on: accessor).store(in: &subscriptions)
+
+        inventory.$isDirty.assign(to: &$isDirty)
+        friendshipData.$isDirty.assign(to: &$isDirty)
+        experiencePoints.$isDirty.assign(to: &$isDirty)
+
+        $name.assign(to: \.name, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $farmName.assign(to: \.farmName, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $money.assign(to: \.money, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $favoriteThing.assign(to: \.favoriteThing, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $catPerson.assign(to: \.catPerson, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $whichPetBreed.assign(to: \.whichPetBreed, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $isMale.assign(to: \.isMale, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $speed.assign(to: \.speed, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $maxItems.assign(to: \.maxItems, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $attack.assign(to: \.attack, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $immunity.assign(to: \.immunity, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $attackIncreaseModifier.assign(to: \.attackIncreaseModifier, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $knockbackModifier.assign(to: \.knockbackModifier, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $weaponSpeedModifier.assign(to: \.weaponSpeedModifier, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $critChanceModifier.assign(to: \.critChanceModifier, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $critPowerModifier.assign(to: \.critPowerModifier, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $trashCanLevel.assign(to: \.trashCanLevel, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $houseUpgradeLevel.assign(to: \.houseUpgradeLevel, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $daysUntilHouseUpgrade.assign(to: \.daysUntilHouseUpgrade, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $magneticRadius.assign(to: \.magneticRadius, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $stamina.assign(to: \.stamina, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $maxStamina.assign(to: \.maxStamina, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $maxHealth.assign(to: \.maxHealth, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $health.assign(to: \.health, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $daysLeftForToolUpgrade.assign(to: \.daysLeftForToolUpgrade, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $farmingLevel.assign(to: \.farmingLevel, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $miningLevel.assign(to: \.miningLevel, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $combatLevel.assign(to: \.combatLevel, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $foragingLevel.assign(to: \.foragingLevel, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $fishingLevel.assign(to: \.fishingLevel, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $luckLevel.assign(to: \.luckLevel, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $addedFarmingLevel.assign(to: \.addedFarmingLevel, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $addedMiningLevel.assign(to: \.addedMiningLevel, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $addedCombatLevel.assign(to: \.addedCombatLevel, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $addedForagingLevel.assign(to: \.addedForagingLevel, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $addedFishingLevel.assign(to: \.addedFishingLevel, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $addedLuckLevel.assign(to: \.addedLuckLevel, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $newSkillPointsToSpend.assign(to: \.newSkillPointsToSpend, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
 
         experiencePoints.$farmingExperience.sink {[weak self] newFarmingExperience in
             let newLevel = newFarmingExperience.toSVLevel()

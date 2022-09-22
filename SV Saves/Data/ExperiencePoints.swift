@@ -13,8 +13,10 @@ class ExperiencePoints: ObservableObject {
 
     let experiencePoints: SDGParser.ExperiencePoints
 
-    
     var subscriptions = Set<AnyCancellable>()
+
+    @Published
+    var isDirty: Bool = false
 
     init( experiencePoints: SDGParser.ExperiencePoints) {
         self.experiencePoints = experiencePoints
@@ -24,11 +26,11 @@ class ExperiencePoints: ObservableObject {
         fishingExperience = experiencePoints.fishingExperience
         combatExperience = experiencePoints.combatExperience
 
-        $farmingExperience.assign(to: \.farmingExperience, on: experiencePoints).store(in: &subscriptions)
-        $miningExperience.assign(to: \.miningExperience, on: experiencePoints).store(in: &subscriptions)
-        $foragingExperience.assign(to: \.foragingExperience, on: experiencePoints).store(in: &subscriptions)
-        $fishingExperience.assign(to: \.fishingExperience, on: experiencePoints).store(in: &subscriptions)
-        $combatExperience.assign(to: \.combatExperience, on: experiencePoints).store(in: &subscriptions)
+        $farmingExperience.assign(to: \.farmingExperience, on: experiencePoints, markDirty: &$isDirty, storeIn: &subscriptions)
+        $miningExperience.assign(to: \.miningExperience, on: experiencePoints, markDirty: &$isDirty, storeIn: &subscriptions)
+        $foragingExperience.assign(to: \.foragingExperience, on: experiencePoints, markDirty: &$isDirty, storeIn: &subscriptions)
+        $fishingExperience.assign(to: \.fishingExperience, on: experiencePoints, markDirty: &$isDirty, storeIn: &subscriptions)
+        $combatExperience.assign(to: \.combatExperience, on: experiencePoints, markDirty: &$isDirty, storeIn: &subscriptions)
     }
 
     @Published
