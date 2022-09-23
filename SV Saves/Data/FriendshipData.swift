@@ -56,8 +56,8 @@ class Friendship: ObservableObject, Identifiable {
         points = item.points
         giftsThisWeek = item.giftsThisWeek
 
-        $points.assign(to: \.points, on: item).store(in: &subscriptions)
-        $giftsThisWeek.assign(to: \.giftsThisWeek, on: item).store(in: &subscriptions)
+        $points.assign(to: \.points, on: item, markDirty: &$isDirty, storeIn: &subscriptions)
+        $giftsThisWeek.assign(to: \.giftsThisWeek, on: item, markDirty: &$isDirty, storeIn: &subscriptions)
 
     }
 

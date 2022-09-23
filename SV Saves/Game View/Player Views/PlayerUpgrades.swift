@@ -17,13 +17,7 @@ struct PlayerUpgrades: View {
 
     var body: some View {
         List {
-            Picker("Backpack Size", selection: $player.maxItems) {
-                ForEach([12, 24, 36], id: \.self) {
-                    Text("\($0)")
-                        .padding()
-                        .tag($0)
-                }
-            }
+
             HStack {
                 Text("Magnetic Radius")
                 TextField("", value: $player.magneticRadius, format: .number)
@@ -55,13 +49,6 @@ struct PlayerUpgrades: View {
             HStack {
                 Text("Days left for tool Upgrade")
                 TextField("", value: $player.daysLeftForToolUpgrade, format: .number)
-                    .keyboardType(.numberPad)
-                    .multilineTextAlignment(.trailing)
-            }
-
-            HStack {
-                Text("Club Coins")
-                TextField("", value: $player.clubCoins, format: .number)
                     .keyboardType(.numberPad)
                     .multilineTextAlignment(.trailing)
             }

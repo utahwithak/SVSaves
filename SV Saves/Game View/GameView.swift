@@ -9,6 +9,54 @@ import Foundation
 import SwiftUI
 import SDGParser
 
+
+enum GameViewContent: Int, Identifiable, Hashable, CaseIterable {
+
+
+    case playerInfo
+    case inventory
+    case friendship
+    case experience
+    case combat
+    case playerStats
+    case upgrades
+    case weather
+    case gameData
+    case backups
+case misc
+
+    var id: Int {
+        rawValue
+    }
+
+    var title: String {
+        switch self {
+        case .gameData:
+            return "Game Data"
+        case .weather:
+            return "Weather"
+        case .playerStats:
+            return "Stats"
+        case .playerInfo:
+            return "Player Info"
+        case .inventory:
+            return "Backpack"
+        case .friendship:
+            return "Relationships"
+        case .experience:
+            return "Experience"
+        case .combat:
+            return "Combat"
+        case .backups:
+            return "Backups"
+        case .upgrades:
+            return "Upgrades"
+        case .misc:
+            return "Misc"
+        }
+    }
+}
+
 struct GameView: View {
     @ObservedObject
     var game: Game
@@ -27,123 +75,42 @@ struct GameView: View {
     @State
     var promptForSaveBackup: Bool = false
 
+    let content: [GameViewContent] = [.gameData, .weather]
 
     var body: some View {
 
         Form {
 
-            Section {
-                Picker("Farm Type", selection: $game.farmType) {
-                    ForEach(FarmType.allCases) {
-                        Text($0.displayName).tag($0)
+            ForEach(GameViewContent.allCases) { content in
+                Section {
+                    switch content {
+                    case .gameData:
+                        GameDataView(game: game)
+                    case .weather:
+                        WeatherView(game: game)
+                    case .playerStats:
+                        PlayerStatsVIew(player: game.player)
+                    case .playerInfo:
+                        PlayerInfo(player: game.player)
+                    case .inventory:
+                        PlayerBackpackView(player: game.player)
+                    case .friendship:
+                        PlayerRelationshipView(player: game.player)
+                    case .experience:
+                        ExperienceView(player: game.player)
+                    case .combat:
+                        AttackView(player: game.player)
+                    case .upgrades:
+                        PlayerUpgrades(player: game.player)
+                    case .backups:
+                        GameBackupSectionView(game: game)
+                    case .misc:
+                        GameViewExtras(game: game)
+
                     }
+                } header: {
+                    Text(content.title)
                 }
-
-                Picker("Current Season", selection: $game.season) {
-                    ForEach(Season.allCases) {
-                        Text($0.displayName).tag($0)
-                    }
-                }
-
-                HStack {
-                    Text("Current Year")
-                    TextField("year", value: $game.year, format: .number)
-                        .keyboardType(.numberPad)
-                        .multilineTextAlignment(.trailing)
-
-                }
-                HStack {
-                    Text("Day of Month")
-                    TextField("day", value: $game.dayOfMonth, format: .number)
-                        .keyboardType(.numberPad)
-                        .multilineTextAlignment(.trailing)
-
-                }
-
-                HStack {
-                    Text("Sam's Band Name")
-                    TextField("name", text: $game.samBandName)
-                        .multilineTextAlignment(.trailing)
-
-                }
-                HStack {
-                    Text("Elliot's Book Name")
-                    TextField("name", text: $game.elliottBookName)
-                        .multilineTextAlignment(.trailing)
-
-                }
-                HStack {
-                    Text("Daily Luck")
-                    TextField("luck value", value: $game.dailyLuck, format:.number)
-                        .multilineTextAlignment(.trailing)
-                        .keyboardType(.decimalPad)
-                    
-                }
-
-                Toggle(isOn: $game.shippingTax) {
-                    Text("Shipping Tax")
-                }
-
-                Toggle(isOn: $game.shouldSpawnMonsters) {
-                    Text("Should Spawn Monsters")
-                }
-            } header: {
-                Text("Game")
-            }
-
-            Section {
-                Toggle(isOn: $game.isRaining) {
-                    Text("Is Raining")
-                }
-
-                Toggle(isOn: $game.bloomDay) {
-                    Text("Bloom Day")
-                }
-
-                Toggle(isOn: $game.isLightning) {
-                    Text("Is Lightning")
-                }
-
-                Toggle(isOn: $game.isSnowing) {
-                    Text("Is Snowing")
-                }
-
-                HStack {
-                    Text("Chance of Rain")
-                    TextField("Value", value: $game.chanceToRainTomorrow, format:.number)
-                        .multilineTextAlignment(.trailing)
-                        .keyboardType(.decimalPad)
-
-                }
-            } header: {
-                Text("Weather")
-            }
-
-            Section {
-                PlayerForm(player: game.player)
-                AttackView(player: game.player)
-                PlayerUpgrades(player: game.player)
-                ExperienceView(player: game.player)
-            } header: {
-                Text("Player")
-            }
-
-            Section {
-
-                HStack {
-                    Text("Game Version")
-                    Spacer()
-                    Text(game.accessor.gameVersion)
-                }
-
-            } header: {
-                Text("Misc")
-            }
-
-            Section {
-                GameBackupSectionView(game: game)
-            } header: {
-                Text("Backup")
             }
         }
         .navigationTitle($game.player.farmName)

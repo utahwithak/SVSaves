@@ -34,7 +34,7 @@ struct AttackView: View {
             }
 
             HStack {
-                Text("Attach Increase Modifier")
+                Text("Attack Increase Modifier")
                 TextField("", value: $player.attackIncreaseModifier, format: .number)
                     .keyboardType(.numberPad)
                     .multilineTextAlignment(.trailing)

@@ -15,9 +15,14 @@ struct FriendshipView: View {
     var body: some View {
 
         NavigationStack {
+            Text("Only people you have met in the game will show here.")
+                .multilineTextAlignment(.center)
+                .font(.subheadline)
+                .padding([.leading, .trailing, .top])
             List(data.friendships) { item in
                 Section(item.friendName) {
                     PointsRow(friendship: item)
+                    HeartsRow(friendship: item)
                     GiftsRow(friendship: item)
                 }
             }
@@ -55,6 +60,57 @@ struct PointsRow: View {
         }
     }
 }
+
+struct HeartsRow: View {
+    @ObservedObject
+    var friendship: Friendship
+
+    init(friendship: Friendship) {
+        self.friendship = friendship
+    }
+
+    var body: some View {
+        ScrollView(.horizontal,showsIndicators: false) {
+            HStack {
+                ForEach(0..<14) { i in
+                    Button {
+                        friendship.points = (i + 1) * 250
+                    } label: {
+                        if i * 250 >= friendship.points {
+                            Image(systemName: "heart")
+                                .foregroundColor(Color(uiColor: .systemRed))
+                        } else {
+                            Image(systemName: "heart.fill")
+                                .foregroundColor(Color(uiColor: .systemRed))
+                        }
+                    }.onTapGesture {
+
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+#if DEBUG
+struct HeartsRow_Preview: PreviewProvider {
+    static var previews: some View {
+        HStack {
+            Spacer()
+            ForEach(0..<14) { i in
+                Button {
+                    print("Test")
+                } label: {
+                    Image(systemName: "heart")
+                }
+
+            }
+            Spacer()
+        }
+    }
+}
+#endif
 
 struct GiftsRow: View {
     @ObservedObject
