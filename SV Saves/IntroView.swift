@@ -27,6 +27,7 @@ struct IntroView: View {
             Text("Editing may cause unexepcted results and result in unplayable games.")
                 .foregroundColor(.red)
                 .fontWeight(.bold)
+                .padding()
                 .multilineTextAlignment(.center)
 
             Text("In order to edit the games choose the folder on your device where your Stardew Valley games are.")

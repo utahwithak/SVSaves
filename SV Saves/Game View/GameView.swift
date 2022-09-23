@@ -106,7 +106,6 @@ struct GameView: View {
                         GameBackupSectionView(game: game)
                     case .misc:
                         GameViewExtras(game: game)
-
                     }
                 } header: {
                     Text(content.title)
