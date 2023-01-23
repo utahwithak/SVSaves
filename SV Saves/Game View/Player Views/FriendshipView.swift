@@ -14,31 +14,28 @@ struct FriendshipView: View {
 
     var body: some View {
 
-        NavigationStack {
-            Text("Only people you have met in the game will show here.")
-                .multilineTextAlignment(.center)
-                .font(.subheadline)
-                .padding([.leading, .trailing, .top])
-            List(data.friendships) { item in
-                Section(item.friendName) {
-                    PointsRow(friendship: item)
-                    HeartsRow(friendship: item)
-                    GiftsRow(friendship: item)
-                }
+        Text("Only people you have met in the game will show here.")
+            .multilineTextAlignment(.center)
+            .font(.subheadline)
+            .padding([.leading, .trailing, .top])
+        List(data.friendships) { item in
+            Section(item.friendName) {
+                PointsRow(friendship: item)
+                HeartsRow(friendship: item)
+                GiftsRow(friendship: item)
             }
-            .toolbar {
-                ToolbarItemGroup(placement: .keyboard) {
-                    Spacer()
-                    Button("Done") {
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
-                                                        to: nil, from: nil, for: nil)
-                    }
-                }
-            }
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("Friendship")
-
         }
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                                    to: nil, from: nil, for: nil)
+                }
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Friendship")
 
     }
 }

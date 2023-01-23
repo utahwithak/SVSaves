@@ -22,8 +22,12 @@ struct InventoryView: View {
                 .font(.subheadline)
                 .padding([.leading, .trailing, .top])
             List {
-                ForEach(inventory.items.filter { !$0.isEmpty }) { item in
-                    ItemRow(item: item)
+                ForEach(inventory.items) { item in
+                    if item.isEmpty {
+
+                    } else {
+                        ItemRow(item: item)
+                    }
                 }
 
             }
@@ -70,5 +74,32 @@ struct ItemRow: View {
 
 
         }
+    }
+}
+
+struct SpawnRow: View {
+
+    let item: Item
+
+    @State
+    var showSpawnItemSheet = false
+
+    var body: some View {
+        Button {
+            showSpawnItemSheet = true
+        } label: {
+            Text("Create Item")
+        }
+        .sheet(isPresented: showSpawnItemSheet) {
+            SpawnItemSheet()
+        }
+
+    }
+}
+
+struct SpawnItemSheet: View {
+
+    var body: some View {
+        Text("Hello world")
     }
 }

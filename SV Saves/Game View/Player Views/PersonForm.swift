@@ -45,6 +45,12 @@ struct PlayerInfo: View {
                 .multilineTextAlignment(.trailing)
         }
 
+        HStack {
+            Text("Qi Gems")
+            TextField("", value: $player.qiGems, format: .number)
+                .keyboardType(.numberPad)
+                .multilineTextAlignment(.trailing)
+        }
 
     }
 

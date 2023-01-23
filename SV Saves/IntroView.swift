@@ -21,7 +21,7 @@ struct IntroView: View {
 
     var body: some View {
         VStack {
-            Text("SV Saves allows editing of Stardew Valley 1.4.5 save games.")
+            Text("SV Saves allows editing of Stardew Valley saved games.")
                 .multilineTextAlignment(.center)
                 .padding()
             Text("Editing may cause unexepcted results and result in unplayable games.")
@@ -34,7 +34,7 @@ struct IntroView: View {
                 .multilineTextAlignment(.center)
                 .padding()
 
-            Button("Choose 'Stardew Valley' Folder") {
+            Button("Choose On Device and then 'Stardew Valley' Folder") {
                 showDocumentPicker = true
             }
         }

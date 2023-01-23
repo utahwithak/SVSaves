@@ -60,7 +60,7 @@ struct BackupView: View {
             currentBackup = nil
         })
 
-        NavigationStack {
+        NavigationView {
             VStack {
                 if hasBoth {
                     Picker("", selection: $filterType) {
@@ -102,6 +102,7 @@ struct BackupView: View {
                 }
             }
         }
+        .navigationViewStyle(.stack)
     }
 
     func restoreGame(from backup: Backup){

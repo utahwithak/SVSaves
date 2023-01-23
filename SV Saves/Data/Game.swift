@@ -86,6 +86,22 @@ class Game : ObservableObject, Identifiable {
     @Published
     public var shouldSpawnMonsters: Bool
 
+    @Published
+    public var goldenWalnuts: Int
+
+    @Published
+    public var visitsUntilY1Guarantee: Int
+
+    @Published
+    public var parrotPlatformsUnlocked: Bool
+
+    @Published
+    public var farmPerfect: Bool
+
+    @Published
+    public var communityCenter: CommunityCenter?
+
+    public var bundleData: BundleData
 
     private var gamePath: URL {
         let name = path.lastPathComponent
@@ -99,6 +115,8 @@ class Game : ObservableObject, Identifiable {
     private var dirtySubscription: AnyCancellable?
 
     private var playerDirtySubscription: AnyCancellable?
+
+    private var communityCenterSubscriptions: AnyCancellable?
     
     init(path: URL, delegate: GameDelegate) async throws {
         self.delegate = delegate
@@ -126,12 +144,25 @@ class Game : ObservableObject, Identifiable {
         isLightning = accessor.isLightning
         isSnowing = accessor.isSnowing
         shouldSpawnMonsters = accessor.shouldSpawnMonsters
+        goldenWalnuts = accessor.goldenWalnuts
+        visitsUntilY1Guarantee = accessor.visitsUntilY1Guarantee
+        parrotPlatformsUnlocked = accessor.parrotPlatformsUnlocked
+        farmPerfect = accessor.farmPerfect
+        bundleData = accessor.bundleData
+
+        communityCenter = accessor.communityCenter.map { CommunityCenter(accessor: $0, game: accessor) }
 
         $accessor
             .map { newGame in
                 Player(player: newGame.player)
             }
             .assign(to: &$player)
+
+        $accessor
+            .map { newGame in
+                newGame.communityCenter.map { CommunityCenter(accessor: $0, game: newGame)}
+            }
+            .assign(to: &$communityCenter)
 
         gameSubscription = $accessor.sink { [weak self] _ in
             self?.reloadFile()
@@ -140,6 +171,11 @@ class Game : ObservableObject, Identifiable {
         playerDirtySubscription = $player.sink { [weak self] newPlayer in
             self?.observedPlayer(newPlayer)
         }
+
+        communityCenterSubscriptions = $communityCenter.sink(receiveValue: { [weak self] center in
+            self?.observeNewCenter(center)
+        })
+
 
         reloadFile()
 
@@ -164,6 +200,12 @@ class Game : ObservableObject, Identifiable {
         isLightning = accessor.isLightning
         isSnowing = accessor.isSnowing
         shouldSpawnMonsters = accessor.shouldSpawnMonsters
+        goldenWalnuts = accessor.goldenWalnuts
+        visitsUntilY1Guarantee = accessor.visitsUntilY1Guarantee
+        parrotPlatformsUnlocked = accessor.parrotPlatformsUnlocked
+        farmPerfect = accessor.farmPerfect
+        bundleData = accessor.bundleData
+        communityCenter = accessor.communityCenter.map { CommunityCenter(accessor: $0, game: accessor) }
 
         subscriptions.removeAll(keepingCapacity: true)
 
@@ -181,11 +223,20 @@ class Game : ObservableObject, Identifiable {
         $isLightning.assign(to: \.isLightning, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
         $isSnowing.assign(to: \.isSnowing, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
         $shouldSpawnMonsters.assign(to: \.shouldSpawnMonsters, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $goldenWalnuts.assign(to: \.goldenWalnuts, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $visitsUntilY1Guarantee.assign(to: \.visitsUntilY1Guarantee, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $parrotPlatformsUnlocked.assign(to: \.parrotPlatformsUnlocked, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $farmPerfect.assign(to: \.farmPerfect, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        
         isDirty = false
     }
 
     func observedPlayer(_ player: Player) {
         player.$isDirty.assign(to: &$isDirty)
+    }
+
+    func observeNewCenter(_ center: CommunityCenter?) {
+        center?.$isDirty.assign(to: &$isDirty)
     }
 
     func reload() async throws {
@@ -209,10 +260,10 @@ class Game : ObservableObject, Identifiable {
         }
     }
 
-
     func checkForBackup() {
-        self.backups = delegate?.backups(for: self) ?? []
-
+        Task { @MainActor in
+            self.backups = delegate?.backups(for: self) ?? []
+        }
     }
 
     enum BackupLocation {
@@ -233,7 +284,8 @@ class Game : ObservableObject, Identifiable {
     }
 
     func restoreOldFile() {
-        let oldFile = self.path.appending(path: path.lastPathComponent + "_old")
+
+        let oldFile = self.path.appendingPathComponent(path.lastPathComponent + "_old")
         restoreGame(from: oldFile)
 
     }

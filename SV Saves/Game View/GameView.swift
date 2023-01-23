@@ -112,7 +112,8 @@ struct GameView: View {
                 }
             }
         }
-        .navigationTitle($game.player.farmName)
+        .navigationBarTitle(Text(game.player.farmName))
+//        .navigationTitle($game.player.farmName)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {

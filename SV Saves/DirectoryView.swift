@@ -32,7 +32,7 @@ struct DirectoryView: View {
 
     var body: some View {
         
-        NavigationStack {
+        NavigationView {
             VStack {
                 if manager.canAccessUrl {
                     if manager.isLoading {
@@ -112,6 +112,7 @@ struct DirectoryView: View {
             }
             
         }
+        .navigationViewStyle(.stack)
         
     }
 }

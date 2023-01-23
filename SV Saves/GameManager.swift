@@ -170,7 +170,7 @@ class GameManager : ObservableObject {
     func backupGame(_ game: Game, to: URL) {
         let gameName = game.path.lastPathComponent
         // create backup folder for this game
-        let gameBackupFolder = to.appending(component: gameName)
+        let gameBackupFolder = to.appendingPathComponent(gameName)
 
         let versionFolderName = Self.dateFormatter.string(from: Date())
         let destination = gameBackupFolder.appendingPathComponent(versionFolderName, isDirectory: true)
@@ -245,7 +245,7 @@ extension GameManager: GameDelegate {
     func backups(for game: Game, in root: URL, isLocal: Bool) -> [Backup] {
         let gameName = game.path.lastPathComponent
         // create backup folder for this game
-        let gameBackupFolder = root.appending(component: gameName)
+        let gameBackupFolder = root.appendingPathComponent(gameName)
         var isDir: ObjCBool = false
         guard FileManager.default.fileExists(atPath: gameBackupFolder.path, isDirectory: &isDir), isDir.boolValue else {
             return []

@@ -25,7 +25,7 @@ struct SettingsView: View {
 
     var body: some View {
 
-        NavigationStack {
+        NavigationView {
             Form {
                 Section {
                     Toggle(isOn: $settings.shouldAlwaysBackupBeforeSave) {
@@ -102,6 +102,7 @@ struct SettingsView: View {
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
         }
+        .navigationViewStyle(.stack)
     }
 
     func restorePurchases() {

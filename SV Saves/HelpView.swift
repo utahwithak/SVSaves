@@ -14,7 +14,7 @@ struct HelpView: View {
 
     var body: some View {
 
-        NavigationStack {
+        NavigationView {
             VStack {
                 List {
                     Section("For Best Results") {
@@ -70,6 +70,7 @@ struct HelpView: View {
             .navigationTitle("How to")
 
         }
+        .navigationViewStyle(.stack)
 
     }
 

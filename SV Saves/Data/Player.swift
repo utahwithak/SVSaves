@@ -124,6 +124,9 @@ class Player: ObservableObject {
     public var clubCoins: Int
 
     @Published
+    public var qiGems: Int
+
+    @Published
     public var newSkillPointsToSpend: Int
 
     private var subscriptions = Set<AnyCancellable>()
@@ -161,6 +164,7 @@ class Player: ObservableObject {
         maxStamina = accessor.maxStamina
         daysLeftForToolUpgrade = accessor.daysLeftForToolUpgrade
         clubCoins = accessor.clubCoins
+        qiGems = accessor.qiGems
         newSkillPointsToSpend = accessor.newSkillPointsToSpend
 
         farmingLevel = accessor.farmingLevel
@@ -220,6 +224,7 @@ class Player: ObservableObject {
         $addedLuckLevel.assign(to: \.addedLuckLevel, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
         $newSkillPointsToSpend.assign(to: \.newSkillPointsToSpend, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
         $clubCoins.assign(to: \.clubCoins, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
+        $qiGems.assign(to: \.qiGems, on: accessor, markDirty: &$isDirty, storeIn: &subscriptions)
 
         experiencePoints.$farmingExperience.sink {[weak self] newFarmingExperience in
             let newLevel = newFarmingExperience.toSVLevel()
