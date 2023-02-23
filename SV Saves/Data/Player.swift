@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import SDGParser
 
+@MainActor
 class Player: ObservableObject {
     let accessor: SDGParser.Player
 

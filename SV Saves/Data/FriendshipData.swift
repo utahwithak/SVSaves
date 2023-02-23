@@ -9,6 +9,7 @@ import Combine
 import Foundation
 import SDGParser
 
+@MainActor
 class FriendshipData: ObservableObject {
     let accessor: SDGParser.FriendshipData
 
@@ -29,12 +30,10 @@ class FriendshipData: ObservableObject {
 
 }
 
+@MainActor
 class Friendship: ObservableObject, Identifiable {
 
-    var id: String {
-        item.friendName
-    }
-
+    let id: String
     let item: FriendshipItem
 
     let friendName: String
@@ -51,6 +50,7 @@ class Friendship: ObservableObject, Identifiable {
     var isDirty: Bool = false
 
     init(item: FriendshipItem) {
+        self.id = item.friendName
         self.item = item
         friendName = item.friendName
         points = item.points

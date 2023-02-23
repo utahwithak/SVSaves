@@ -9,7 +9,7 @@ import Foundation
 import SDGParser
 import Combine
 
-
+@MainActor
 class Inventory: ObservableObject {
     private let inventory: SDGParser.Inventory
 
@@ -27,14 +27,15 @@ class Inventory: ObservableObject {
     var items: [Item]
 }
 
-
+@MainActor
 class Item: ObservableObject, Identifiable {
 
-    let isEmpty: Bool
+    var isEmpty: Bool
 
-    let name: String
+    var name: String
 
-    let isStackable: Bool
+    @Published
+    var isStackable: Bool
 
     @Published
     var isDirty: Bool = false
@@ -55,6 +56,15 @@ class Item: ObservableObject, Identifiable {
 
         $stack.assign(to: \.stack, on: item, markDirty: &$isDirty, storeIn: &subscriptions)
 
+    }
+
+    func makeItem(from itemID: ItemID, count: Int, quality: Quality, type: ItemType) {
+        isEmpty = false
+        name = itemID.description
+        item.makeItem(from: itemID, count: count, quality: quality, type: type)
+        stack = count
+        isStackable = true
+        isDirty = true
     }
 
 }

@@ -9,6 +9,7 @@ import Combine
 import Foundation
 import SDGParser
 
+@MainActor
 class ExperiencePoints: ObservableObject {
 
     let experiencePoints: SDGParser.ExperiencePoints

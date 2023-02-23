@@ -6,6 +6,7 @@
 import Foundation
 import SDGParser
 
+@MainActor
 class CommunityCenter : ObservableObject, Identifiable {
     let accessor: SDGParser.CommunityCenter
 

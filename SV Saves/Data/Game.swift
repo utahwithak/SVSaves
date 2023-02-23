@@ -10,7 +10,7 @@ import Combine
 import SDGParser
 import SwiftyXMLParser
 
-protocol GameDelegate: AnyObject {
+protocol GameDelegate: Sendable, AnyObject {
     func backupGame(_ game: Game)
     func backupGameToCloud(_ game: Game)
     func backupGameLocally(_ game: Game)

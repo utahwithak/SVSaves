@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SDGParser
 
 struct InventoryView: View {
 
@@ -23,11 +24,7 @@ struct InventoryView: View {
                 .padding([.leading, .trailing, .top])
             List {
                 ForEach(inventory.items) { item in
-                    if item.isEmpty {
-
-                    } else {
-                        ItemRow(item: item)
-                    }
+                    ItemRow(item: item)
                 }
 
             }
@@ -57,10 +54,10 @@ struct ItemRow: View {
     }
 
     var body: some View {
-        HStack {
-            if item.isEmpty {
-                Text("<empty slot>")
-            } else {
+        if item.isEmpty {
+            SpawnRow(item: item)
+        } else {
+            HStack {
                 Text(item.name)
                 Spacer()
                 if item.isStackable {
@@ -71,8 +68,6 @@ struct ItemRow: View {
                 }
 
             }
-
-
         }
     }
 }
@@ -90,16 +85,79 @@ struct SpawnRow: View {
         } label: {
             Text("Create Item")
         }
-        .sheet(isPresented: showSpawnItemSheet) {
-            SpawnItemSheet()
+        .sheet(isPresented: $showSpawnItemSheet) {
+            SpawnItemSheet(item: item)
         }
 
     }
 }
 
 struct SpawnItemSheet: View {
+    @Environment(\.presentationMode)
+    var presentationMode: Binding<PresentationMode>
+
+    let item: Item
+
+    @State
+    var itemID: SDGParser.ItemID = .prismaticShard
+
+    @State
+    var stackSize: Int = 1
+
+    @State
+    var quality: Quality = .none
+
+    @State
+    var itemType: ItemType = .none
 
     var body: some View {
-        Text("Hello world")
+        NavigationView {
+            Form {
+                Picker("Item Type", selection: $itemID) {
+                    ForEach(ItemID.sortedValues.filter({ $0 != .unknown })) { item in
+                        Text(item.description).tag(item)
+                    }
+                }
+                HStack {
+                    Text("Count")
+                    TextField("", value: $stackSize, formatter: BoundFormatter(min: 1, max:  999))
+                        .keyboardType(.numberPad)
+                        .multilineTextAlignment(.trailing)
+                }
+                Picker("Quality", selection: $quality) {
+                    ForEach(Quality.allCases) { item in
+                        HStack {
+                            Text(item.description)
+                        }.tag(item)
+                    }
+                }
+                Picker("Item Type", selection: $itemType) {
+                    ForEach(ItemType.sortedValues) { item in
+                        HStack {
+                            Text(item.description)
+                        }.tag(item)
+                    }
+                }
+
+
+            }.toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Cancel")
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        item.makeItem(from: itemID, count: stackSize, quality: quality, type: itemType)
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Save")
+                    }
+                }
+            }
+
+        }
     }
 }
