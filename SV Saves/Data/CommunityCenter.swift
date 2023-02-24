@@ -8,6 +8,13 @@ import SDGParser
 
 @MainActor
 class CommunityCenter : ObservableObject, Identifiable {
+
+    let unlockID = 611439
+
+    let doorUnlocked = "ccDoorUnlock"
+
+    let canReadJunimoText = "canReadJunimoText"
+
     let accessor: SDGParser.CommunityCenter
 
     let game: SDGParser.Game
@@ -15,9 +22,17 @@ class CommunityCenter : ObservableObject, Identifiable {
     @Published
     var isDirty: Bool = false
 
+    @Published
+    var isUnlocked: Bool = false
+
+    @Published
+    var canReadJunimo: Bool = false
+
     init(accessor: SDGParser.CommunityCenter, game: SDGParser.Game) {
         self.accessor = accessor
         self.game = game
+        isUnlocked = game.player.mailReceived.contains(doorUnlocked)
+        canReadJunimo = game.player.mailReceived.contains(canReadJunimoText)
     }
 
     func markBundleComplete(with id: Int, in room: BundleData.Room) {
@@ -61,4 +76,21 @@ class CommunityCenter : ObservableObject, Identifiable {
         }
         return false
     }
+
+    func markCommunityCenterUnlocked() {
+        if !game.player.mailReceived.contains(doorUnlocked){
+            game.player.mailReceived.append(doorUnlocked)
+            isUnlocked = true
+            isDirty = true
+        }
+    }
+
+    func markCanReadJunimoText() {
+        if !game.player.mailReceived.contains(canReadJunimoText){
+            game.player.mailReceived.append(canReadJunimoText)
+            canReadJunimo = true
+            isDirty = true
+        }
+    }
+
 }

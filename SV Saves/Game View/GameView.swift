@@ -14,6 +14,7 @@ enum GameViewContent: Int, Identifiable, Hashable, CaseIterable {
 
 
     case playerInfo
+    case communityCenter
     case inventory
     case friendship
     case experience
@@ -23,7 +24,7 @@ enum GameViewContent: Int, Identifiable, Hashable, CaseIterable {
     case weather
     case gameData
     case backups
-case misc
+    case misc
 
     var id: Int {
         rawValue
@@ -53,6 +54,8 @@ case misc
             return "Upgrades"
         case .misc:
             return "Misc"
+        case .communityCenter:
+            return "Community Center"
         }
     }
 }
@@ -86,6 +89,8 @@ struct GameView: View {
                     switch content {
                     case .gameData:
                         GameDataView(game: game)
+                    case .communityCenter:
+                        CommunityCenterView(game: game)
                     case .weather:
                         WeatherView(game: game)
                     case .playerStats:

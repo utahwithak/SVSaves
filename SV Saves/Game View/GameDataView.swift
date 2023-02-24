@@ -64,16 +64,6 @@ struct GameDataView: View {
             }
 
         }
-
-        if let communityCenter = game.communityCenter {
-            NavigationLink {
-                BundleDataView(bundleData: game.bundleData, communityCenter: communityCenter)
-            } label: {
-                Text("Bundle Data")
-            }
-        }
-
-
     }
 
     @ViewBuilder

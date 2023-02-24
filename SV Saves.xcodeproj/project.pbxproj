@@ -50,6 +50,7 @@
 		8F7326372694B9FC002DCDA7 /* SV_SavesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7326362694B9FC002DCDA7 /* SV_SavesUITests.swift */; };
 		8F777E642979A2B6001E2D56 /* BundleDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F777E632979A2B6001E2D56 /* BundleDataView.swift */; };
 		8F777E662979AB83001E2D56 /* CommunityCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F777E652979AB83001E2D56 /* CommunityCenter.swift */; };
+		8F9442EE29A8FA080076E66B /* CommunityCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9442ED29A8FA080076E66B /* CommunityCenterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +119,7 @@
 		8F7326362694B9FC002DCDA7 /* SV_SavesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SV_SavesUITests.swift; sourceTree = "<group>"; };
 		8F777E632979A2B6001E2D56 /* BundleDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleDataView.swift; sourceTree = "<group>"; };
 		8F777E652979AB83001E2D56 /* CommunityCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCenter.swift; sourceTree = "<group>"; };
+		8F9442ED29A8FA080076E66B /* CommunityCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCenterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 				8F442D6328DCC01E0048266A /* GameBackupSectionView.swift */,
 				8F2849D228DDD0D800020DCB /* WeatherView.swift */,
 				8F2849D428DDD12400020DCB /* GameDataView.swift */,
+				8F9442ED29A8FA080076E66B /* CommunityCenterView.swift */,
 				8F2849DC28DDD59400020DCB /* GameViewExtras.swift */,
 				8F777E632979A2B6001E2D56 /* BundleDataView.swift */,
 			);
@@ -452,6 +455,7 @@
 				8F777E662979AB83001E2D56 /* CommunityCenter.swift in Sources */,
 				8F66501428D4FBB90096C703 /* ExperiencePoints.swift in Sources */,
 				8F66500F28D4ECB60096C703 /* AttackViews.swift in Sources */,
+				8F9442EE29A8FA080076E66B /* CommunityCenterView.swift in Sources */,
 				8F442D6628DCC7EB0048266A /* RootViewModel.swift in Sources */,
 				8F7326192694B9F9002DCDA7 /* SV_SavesApp.swift in Sources */,
 				8F5B772626D90CA600B2AA7E /* Game.swift in Sources */,
